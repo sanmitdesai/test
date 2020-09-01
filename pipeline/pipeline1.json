@@ -1,0 +1,387 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureMySqlSink",
+						"writeBatchSize": 10000,
+						"writeBatchTimeout": "00:00:30"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "national_provider_identifier",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "national_provider_identifier",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "last_name_organization_name_of_the_provider",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "last_name_organization_name_of_the_provider",
+									"type": "String",
+									"physicalType": "mediumtext"
+								}
+							},
+							{
+								"source": {
+									"name": "first_name_of_the_provider",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "first_name_of_the_provider",
+									"type": "String",
+									"physicalType": "mediumtext"
+								}
+							},
+							{
+								"source": {
+									"name": "middle_initial_of_the_provider",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "middle_initial_of_the_provider",
+									"type": "String",
+									"physicalType": "mediumtext"
+								}
+							},
+							{
+								"source": {
+									"name": "credentials_of_the_provider",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "credentials_of_the_provider",
+									"type": "String",
+									"physicalType": "mediumtext"
+								}
+							},
+							{
+								"source": {
+									"name": "gender_of_the_provider",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "gender_of_the_provider",
+									"type": "String",
+									"physicalType": "mediumtext"
+								}
+							},
+							{
+								"source": {
+									"name": "entity_type_of_the_provider",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "entity_type_of_the_provider",
+									"type": "String",
+									"physicalType": "mediumtext"
+								}
+							},
+							{
+								"source": {
+									"name": "street_address_1_of_the_provider",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "street_address_1_of_the_provider",
+									"type": "String",
+									"physicalType": "mediumtext"
+								}
+							},
+							{
+								"source": {
+									"name": "street_address_2_of_the_provider",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "street_address_2_of_the_provider",
+									"type": "String",
+									"physicalType": "mediumtext"
+								}
+							},
+							{
+								"source": {
+									"name": "city_of_the_provider",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "city_of_the_provider",
+									"type": "String",
+									"physicalType": "mediumtext"
+								}
+							},
+							{
+								"source": {
+									"name": "zip_code_of_the_provider",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "zip_code_of_the_provider",
+									"type": "String",
+									"physicalType": "mediumtext"
+								}
+							},
+							{
+								"source": {
+									"name": "state_code_of_the_provider",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "state_code_of_the_provider",
+									"type": "String",
+									"physicalType": "mediumtext"
+								}
+							},
+							{
+								"source": {
+									"name": "country_code_of_the_provider",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "country_code_of_the_provider",
+									"type": "String",
+									"physicalType": "mediumtext"
+								}
+							},
+							{
+								"source": {
+									"name": "provider_type",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "provider_type",
+									"type": "String",
+									"physicalType": "mediumtext"
+								}
+							},
+							{
+								"source": {
+									"name": "medicare_participation_indicator",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "medicare_participation_indicator",
+									"type": "String",
+									"physicalType": "mediumtext"
+								}
+							},
+							{
+								"source": {
+									"name": "place_of_service",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "place_of_service",
+									"type": "String",
+									"physicalType": "mediumtext"
+								}
+							},
+							{
+								"source": {
+									"name": "hcpcs_code",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "hcpcs_code",
+									"type": "String",
+									"physicalType": "mediumtext"
+								}
+							},
+							{
+								"source": {
+									"name": "hcpcs_description",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "hcpcs_description",
+									"type": "String",
+									"physicalType": "mediumtext"
+								}
+							},
+							{
+								"source": {
+									"name": "hcpcs_drug_indicator",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "hcpcs_drug_indicator",
+									"type": "String",
+									"physicalType": "mediumtext"
+								}
+							},
+							{
+								"source": {
+									"name": "number_of_services",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "number_of_services",
+									"type": "Double",
+									"physicalType": "double"
+								}
+							},
+							{
+								"source": {
+									"name": "number_of_medicare_beneficiaries",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "number_of_medicare_beneficiaries",
+									"type": "Double",
+									"physicalType": "double"
+								}
+							},
+							{
+								"source": {
+									"name": "number_of_distinct_medicare_beneficiary_per_day_services",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "number_of_distinct_medicare_beneficiary_per_day_services",
+									"type": "Double",
+									"physicalType": "double"
+								}
+							},
+							{
+								"source": {
+									"name": "average_medicare_allowed_amount",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "average_medicare_allowed_amount",
+									"type": "Double",
+									"physicalType": "double"
+								}
+							},
+							{
+								"source": {
+									"name": "average_submitted_charge_amount",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "average_submitted_charge_amount",
+									"type": "Double",
+									"physicalType": "double"
+								}
+							},
+							{
+								"source": {
+									"name": "average_medicare_payment_amount",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "average_medicare_payment_amount",
+									"type": "Double",
+									"physicalType": "double"
+								}
+							},
+							{
+								"source": {
+									"name": "average_medicare_standardized_amount",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "average_medicare_standardized_amount",
+									"type": "Double",
+									"physicalType": "double"
+								}
+							},
+							{
+								"source": {
+									"name": "year",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "year",
+									"type": "String",
+									"physicalType": "mediumtext"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "MPUPD",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "AzureMySqlTable1",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2020-09-01T02:22:53Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

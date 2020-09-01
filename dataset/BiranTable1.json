@@ -1,0 +1,66 @@
+{
+	"name": "BiranTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "BrianMySql2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"npi": {
+				"type": "string"
+			},
+			"pac_id": {
+				"type": "string"
+			},
+			"last_name": {
+				"type": "string"
+			},
+			"first_name": {
+				"type": "string"
+			},
+			"apm_affiliation_1": {
+				"type": "string"
+			},
+			"apm_affiliation_2": {
+				"type": "string"
+			},
+			"apm_affiliation_3": {
+				"type": "string"
+			},
+			"apm_affiliation_4": {
+				"type": "string"
+			},
+			"measure_code": {
+				"type": "string"
+			},
+			"measure_title": {
+				"type": "string"
+			},
+			"inverse_measure": {
+				"type": "string"
+			},
+			"attestation_value": {
+				"type": "string"
+			},
+			"measure_performance_rate": {
+				"type": "int"
+			},
+			"denominator_count": {
+				"type": "int"
+			},
+			"collection_type": {
+				"type": "string"
+			},
+			"reported_on_pc_live_site": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "MySqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "`mpupd`"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
