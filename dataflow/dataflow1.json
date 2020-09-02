@@ -13,8 +13,12 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
-			"script": "source(output(\n\t\tnational_provider_identifier as string,\n\t\tlast_name_organization_name_of_the_provider as string,\n\t\tfirst_name_of_the_provider as string,\n\t\tmiddle_initial_of_the_provider as string,\n\t\tcredentials_of_the_provider as string,\n\t\tgender_of_the_provider as string,\n\t\tentity_type_of_the_provider as string,\n\t\tstreet_address_1_of_the_provider as string,\n\t\tstreet_address_2_of_the_provider as string,\n\t\tcity_of_the_provider as string,\n\t\tzip_code_of_the_provider as string,\n\t\tstate_code_of_the_provider as string,\n\t\tcountry_code_of_the_provider as string,\n\t\tprovider_type as string,\n\t\tmedicare_participation_indicator as string,\n\t\tplace_of_service as string,\n\t\thcpcs_code as string,\n\t\thcpcs_description as string,\n\t\thcpcs_drug_indicator as string,\n\t\tnumber_of_services as string,\n\t\tnumber_of_medicare_beneficiaries as string,\n\t\tnumber_of_distinct_medicare_beneficiary_per_day_services as string,\n\t\taverage_medicare_allowed_amount as string,\n\t\taverage_submitted_charge_amount as string,\n\t\taverage_medicare_payment_amount as string,\n\t\taverage_medicare_standardized_amount as string,\n\t\tyear as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tskipLines: 1) ~> PhysicianCompare"
+			"transformations": [
+				{
+					"name": "DerivedColumn1"
+				}
+			],
+			"script": "source(output(\n\t\tnational_provider_identifier as string,\n\t\tlast_name_organization_name_of_the_provider as string,\n\t\tfirst_name_of_the_provider as string,\n\t\tmiddle_initial_of_the_provider as string,\n\t\tcredentials_of_the_provider as string,\n\t\tgender_of_the_provider as string,\n\t\tentity_type_of_the_provider as string,\n\t\tstreet_address_1_of_the_provider as string,\n\t\tstreet_address_2_of_the_provider as string,\n\t\tcity_of_the_provider as string,\n\t\tzip_code_of_the_provider as string,\n\t\tstate_code_of_the_provider as string,\n\t\tcountry_code_of_the_provider as string,\n\t\tprovider_type as string,\n\t\tmedicare_participation_indicator as string,\n\t\tplace_of_service as string,\n\t\thcpcs_code as string,\n\t\thcpcs_description as string,\n\t\thcpcs_drug_indicator as string,\n\t\tnumber_of_services as string,\n\t\tnumber_of_medicare_beneficiaries as string,\n\t\tnumber_of_distinct_medicare_beneficiary_per_day_services as string,\n\t\taverage_medicare_allowed_amount as string,\n\t\taverage_submitted_charge_amount as string,\n\t\taverage_medicare_payment_amount as string,\n\t\taverage_medicare_standardized_amount as string,\n\t\tyear as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tskipLines: 1) ~> PhysicianCompare\nPhysicianCompare derive(each(match(type == 'string'), $$ + '_clean' = ERROR_FUNCTION(''))) ~> DerivedColumn1"
 		}
 	}
 }
