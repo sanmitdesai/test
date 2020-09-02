@@ -1,0 +1,20 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "MPUPD",
+						"type": "DatasetReference"
+					},
+					"name": "PhysicianCompare"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(output(\n\t\t{\"national_provider_identifier\"|\"last_name/organization_name_of_the_provider\"|\"first_name_of_the_provider\"|\"middle_initial_of_the_provider\"|\"credentials_of_the_provider\"|\"gender_of_the_provider\"|\"entity_type_of_the_provider\"|\"street_address_1_of_the_provider\"|\"street_address_2_of_the_provider\"|\"city_of_the_provider\"|\"zip_code_of_the_provider\"|\"state_code_of_the_provider\"|\"country_code_of_the_provider\"|\"provider_type\"|\"medicare_participation_indicator\"|\"place_of_service\"|\"hcpcs_code\"|\"hcpcs_description\"|\"hcpcs_drug_indicator\"|\"number_of_services\"|\"number_of_medicare_beneficiaries\"|\"number_of_distinct_medicare_beneficiary/per_day_services\"|\"average_medicare_allowed_amount\"|\"average_submitted_charge_amount\"|\"average_medicare_payment_amount\"|\"average_medicare_standardized_amount\"|\"year\"} as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tskipLines: 1) ~> PhysicianCompare"
+		}
+	}
+}
