@@ -1,0 +1,15 @@
+{
+	"name": "top_n_table",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureMySql1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureMySqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "mpupd_top_n_procs"
+		}
+	}
+}
