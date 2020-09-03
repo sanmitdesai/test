@@ -7,7 +7,38 @@
 		},
 		"annotations": [],
 		"type": "AzureMySqlTable",
-		"schema": [],
+		"schema": [
+			{
+				"name": "national_provider_identifier",
+				"type": "int",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "hcpcs_code",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "year",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "proc_count",
+				"type": "int",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "rank",
+				"type": "int",
+				"precision": 0,
+				"scale": 0
+			}
+		],
 		"typeProperties": {
 			"tableName": "mpupd_top_n_procs"
 		}
