@@ -1,5 +1,5 @@
 {
-	"name": "pipeline2",
+	"name": "Copy Top n Procs",
 	"properties": {
 		"activities": [
 			{
@@ -15,8 +15,105 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"enableStaging": false
-				}
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureMySqlSink",
+						"writeBatchSize": 10000,
+						"writeBatchTimeout": "00:00:30"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "national_provider_identifier",
+									"type": "Int32",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "national_provider_identifier",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "hcpcs_code",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "hcpcs_code",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "year",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "year",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "proc_count",
+									"type": "Int32",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "proc_count",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "rank",
+									"type": "Int32",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "rank",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "MPUDP_Top_N_Procs",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "mpupd_top_n_prcs_table",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"annotations": []
