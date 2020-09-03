@@ -195,7 +195,23 @@
 				},
 				"schema": [
 					{
-						"name": "\"national_provider_identifier\"|\"hcpcs_code\"|\"year\"|\"proc_count\"|\"rank\"",
+						"name": "national_provider_identifier",
+						"type": "String"
+					},
+					{
+						"name": "hcpcs_code",
+						"type": "String"
+					},
+					{
+						"name": "year",
+						"type": "String"
+					},
+					{
+						"name": "proc_count",
+						"type": "String"
+					},
+					{
+						"name": "rank",
 						"type": "String"
 					}
 				]
@@ -343,7 +359,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/mpupd_top_n_prcs_table')]",
+			"name": "[concat(parameters('factoryName'), '/top_n_table')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -410,7 +426,16 @@
 							"secureOutput": false,
 							"secureInput": false
 						},
-						"userProperties": [],
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "espy360blob1//MPUPD_Top_N_Procs.csv"
+							},
+							{
+								"name": "Destination",
+								"value": "mpupd_top_n_procs"
+							}
+						],
 						"typeProperties": {
 							"source": {
 								"type": "DelimitedTextSource",
@@ -508,7 +533,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "mpupd_top_n_prcs_table",
+								"referenceName": "top_n_table",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -519,7 +544,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/MPUDP_Top_N_Procs')]",
-				"[concat(variables('factoryId'), '/datasets/mpupd_top_n_prcs_table')]"
+				"[concat(variables('factoryId'), '/datasets/top_n_table')]"
 			]
 		},
 		{
