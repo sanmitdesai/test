@@ -21,7 +21,23 @@
 		},
 		"schema": [
 			{
-				"name": "\"national_provider_identifier\"|\"hcpcs_code\"|\"year\"|\"proc_count\"|\"rank\"",
+				"name": "national_provider_identifier",
+				"type": "String"
+			},
+			{
+				"name": "hcpcs_code",
+				"type": "String"
+			},
+			{
+				"name": "year",
+				"type": "String"
+			},
+			{
+				"name": "proc_count",
+				"type": "String"
+			},
+			{
+				"name": "rank",
 				"type": "String"
 			}
 		]
