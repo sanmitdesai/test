@@ -1,0 +1,29 @@
+{
+	"name": "MPUDP_Top_N_Procs",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "MPUPD_Top_N_Procs.csv",
+				"container": "espy360blob1"
+			},
+			"columnDelimiter": "|",
+			"rowDelimiter": "\n",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "\"national_provider_identifier\"|\"hcpcs_code\"|\"year\"|\"proc_count\"|\"rank\"",
+				"type": "String"
+			}
+		]
+	}
+}
