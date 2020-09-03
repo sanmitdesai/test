@@ -446,7 +446,7 @@
 									{
 										"source": {
 											"name": "hcpcs_code",
-											"type": "Int32",
+											"type": "String",
 											"physicalType": "String"
 										},
 										"sink": {
@@ -470,7 +470,7 @@
 									{
 										"source": {
 											"name": "proc_count",
-											"type": "String",
+											"type": "Int32",
 											"physicalType": "String"
 										},
 										"sink": {
