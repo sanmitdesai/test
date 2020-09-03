@@ -13,7 +13,16 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [],
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "espy360blob1//MPUPD_Top_N_Procs.csv"
+					},
+					{
+						"name": "Destination",
+						"value": "mpupd_top_n_procs"
+					}
+				],
 				"typeProperties": {
 					"source": {
 						"type": "DelimitedTextSource",
