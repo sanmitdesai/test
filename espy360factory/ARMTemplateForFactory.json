@@ -1,0 +1,968 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "espy360factory"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+		},
+		"AzureMySql1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureMySql1'"
+		},
+		"BrianMySql2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'BrianMySql2'"
+		},
+		"MySql1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'MySql1'"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Copy Top n Procs')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureMySqlSink",
+								"writeBatchSize": 10000,
+								"writeBatchTimeout": "00:00:30"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "national_provider_identifier",
+											"type": "Int32",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "national_provider_identifier",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "hcpcs_code",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "hcpcs_code",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "year",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "year",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "proc_count",
+											"type": "Int32",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "proc_count",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "rank",
+											"type": "Int32",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "rank",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "MPUDP_Top_N_Procs",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "mpupd_top_n_prcs_table",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/MPUDP_Top_N_Procs')]",
+				"[concat(variables('factoryId'), '/datasets/mpupd_top_n_prcs_table')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureMySqlSink",
+								"writeBatchSize": 10000,
+								"writeBatchTimeout": "00:00:30"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "national_provider_identifier",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "national_provider_identifier",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "last_name_organization_name_of_the_provider",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "last_name_organization_name_of_the_provider",
+											"type": "String",
+											"physicalType": "mediumtext"
+										}
+									},
+									{
+										"source": {
+											"name": "first_name_of_the_provider",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "first_name_of_the_provider",
+											"type": "String",
+											"physicalType": "mediumtext"
+										}
+									},
+									{
+										"source": {
+											"name": "middle_initial_of_the_provider",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "middle_initial_of_the_provider",
+											"type": "String",
+											"physicalType": "mediumtext"
+										}
+									},
+									{
+										"source": {
+											"name": "credentials_of_the_provider",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "credentials_of_the_provider",
+											"type": "String",
+											"physicalType": "mediumtext"
+										}
+									},
+									{
+										"source": {
+											"name": "gender_of_the_provider",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "gender_of_the_provider",
+											"type": "String",
+											"physicalType": "mediumtext"
+										}
+									},
+									{
+										"source": {
+											"name": "entity_type_of_the_provider",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "entity_type_of_the_provider",
+											"type": "String",
+											"physicalType": "mediumtext"
+										}
+									},
+									{
+										"source": {
+											"name": "street_address_1_of_the_provider",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "street_address_1_of_the_provider",
+											"type": "String",
+											"physicalType": "mediumtext"
+										}
+									},
+									{
+										"source": {
+											"name": "street_address_2_of_the_provider",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "street_address_2_of_the_provider",
+											"type": "String",
+											"physicalType": "mediumtext"
+										}
+									},
+									{
+										"source": {
+											"name": "city_of_the_provider",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "city_of_the_provider",
+											"type": "String",
+											"physicalType": "mediumtext"
+										}
+									},
+									{
+										"source": {
+											"name": "zip_code_of_the_provider",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "zip_code_of_the_provider",
+											"type": "String",
+											"physicalType": "mediumtext"
+										}
+									},
+									{
+										"source": {
+											"name": "state_code_of_the_provider",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "state_code_of_the_provider",
+											"type": "String",
+											"physicalType": "mediumtext"
+										}
+									},
+									{
+										"source": {
+											"name": "country_code_of_the_provider",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "country_code_of_the_provider",
+											"type": "String",
+											"physicalType": "mediumtext"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_type",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "provider_type",
+											"type": "String",
+											"physicalType": "mediumtext"
+										}
+									},
+									{
+										"source": {
+											"name": "medicare_participation_indicator",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "medicare_participation_indicator",
+											"type": "String",
+											"physicalType": "mediumtext"
+										}
+									},
+									{
+										"source": {
+											"name": "place_of_service",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "place_of_service",
+											"type": "String",
+											"physicalType": "mediumtext"
+										}
+									},
+									{
+										"source": {
+											"name": "hcpcs_code",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "hcpcs_code",
+											"type": "String",
+											"physicalType": "mediumtext"
+										}
+									},
+									{
+										"source": {
+											"name": "hcpcs_description",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "hcpcs_description",
+											"type": "String",
+											"physicalType": "mediumtext"
+										}
+									},
+									{
+										"source": {
+											"name": "hcpcs_drug_indicator",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "hcpcs_drug_indicator",
+											"type": "String",
+											"physicalType": "mediumtext"
+										}
+									},
+									{
+										"source": {
+											"name": "number_of_services",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "number_of_services",
+											"type": "Double",
+											"physicalType": "double"
+										}
+									},
+									{
+										"source": {
+											"name": "number_of_medicare_beneficiaries",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "number_of_medicare_beneficiaries",
+											"type": "Double",
+											"physicalType": "double"
+										}
+									},
+									{
+										"source": {
+											"name": "number_of_distinct_medicare_beneficiary_per_day_services",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "number_of_distinct_medicare_beneficiary_per_day_services",
+											"type": "Double",
+											"physicalType": "double"
+										}
+									},
+									{
+										"source": {
+											"name": "average_medicare_allowed_amount",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "average_medicare_allowed_amount",
+											"type": "Double",
+											"physicalType": "double"
+										}
+									},
+									{
+										"source": {
+											"name": "average_submitted_charge_amount",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "average_submitted_charge_amount",
+											"type": "Double",
+											"physicalType": "double"
+										}
+									},
+									{
+										"source": {
+											"name": "average_medicare_payment_amount",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "average_medicare_payment_amount",
+											"type": "Double",
+											"physicalType": "double"
+										}
+									},
+									{
+										"source": {
+											"name": "average_medicare_standardized_amount",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "average_medicare_standardized_amount",
+											"type": "Double",
+											"physicalType": "double"
+										}
+									},
+									{
+										"source": {
+											"name": "year",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "year",
+											"type": "String",
+											"physicalType": "mediumtext"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "MPUPD",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureMySqlTable1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": [],
+				"lastPublishTime": "2020-09-01T02:22:53Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/MPUPD')]",
+				"[concat(variables('factoryId'), '/datasets/AzureMySqlTable1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureMySqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureMySql1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureMySqlTable",
+				"schema": [],
+				"typeProperties": {
+					"tableName": "mpupd"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureMySql1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/BiranTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "BrianMySql2",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"npi": {
+						"type": "string"
+					},
+					"pac_id": {
+						"type": "string"
+					},
+					"last_name": {
+						"type": "string"
+					},
+					"first_name": {
+						"type": "string"
+					},
+					"apm_affiliation_1": {
+						"type": "string"
+					},
+					"apm_affiliation_2": {
+						"type": "string"
+					},
+					"apm_affiliation_3": {
+						"type": "string"
+					},
+					"apm_affiliation_4": {
+						"type": "string"
+					},
+					"measure_code": {
+						"type": "string"
+					},
+					"measure_title": {
+						"type": "string"
+					},
+					"inverse_measure": {
+						"type": "string"
+					},
+					"attestation_value": {
+						"type": "string"
+					},
+					"measure_performance_rate": {
+						"type": "int"
+					},
+					"denominator_count": {
+						"type": "int"
+					},
+					"collection_type": {
+						"type": "string"
+					},
+					"reported_on_pc_live_site": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "MySqlTable",
+				"schema": [],
+				"typeProperties": {
+					"tableName": "`mpupd`"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/BrianMySql2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MPUDP_Top_N_Procs')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "MPUPD_Top_N_Procs.csv",
+						"container": "espy360blob1"
+					},
+					"columnDelimiter": "|",
+					"rowDelimiter": "\n",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "\"national_provider_identifier\"|\"hcpcs_code\"|\"year\"|\"proc_count\"|\"rank\"",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MPUPD')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "MPUPD_Import_File.csv",
+						"container": "espy360blob1"
+					},
+					"columnDelimiter": "|",
+					"rowDelimiter": "\n",
+					"escapeChar": "#",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "national_provider_identifier",
+						"type": "String"
+					},
+					{
+						"name": "last_name_organization_name_of_the_provider",
+						"type": "String"
+					},
+					{
+						"name": "first_name_of_the_provider",
+						"type": "String"
+					},
+					{
+						"name": "middle_initial_of_the_provider",
+						"type": "String"
+					},
+					{
+						"name": "credentials_of_the_provider",
+						"type": "String"
+					},
+					{
+						"name": "gender_of_the_provider",
+						"type": "String"
+					},
+					{
+						"name": "entity_type_of_the_provider",
+						"type": "String"
+					},
+					{
+						"name": "street_address_1_of_the_provider",
+						"type": "String"
+					},
+					{
+						"name": "street_address_2_of_the_provider",
+						"type": "String"
+					},
+					{
+						"name": "city_of_the_provider",
+						"type": "String"
+					},
+					{
+						"name": "zip_code_of_the_provider",
+						"type": "String"
+					},
+					{
+						"name": "state_code_of_the_provider",
+						"type": "String"
+					},
+					{
+						"name": "country_code_of_the_provider",
+						"type": "String"
+					},
+					{
+						"name": "provider_type",
+						"type": "String"
+					},
+					{
+						"name": "medicare_participation_indicator",
+						"type": "String"
+					},
+					{
+						"name": "place_of_service",
+						"type": "String"
+					},
+					{
+						"name": "hcpcs_code",
+						"type": "String"
+					},
+					{
+						"name": "hcpcs_description",
+						"type": "String"
+					},
+					{
+						"name": "hcpcs_drug_indicator",
+						"type": "String"
+					},
+					{
+						"name": "number_of_services",
+						"type": "String"
+					},
+					{
+						"name": "number_of_medicare_beneficiaries",
+						"type": "String"
+					},
+					{
+						"name": "number_of_distinct_medicare_beneficiary_per_day_services",
+						"type": "String"
+					},
+					{
+						"name": "average_medicare_allowed_amount",
+						"type": "String"
+					},
+					{
+						"name": "average_submitted_charge_amount",
+						"type": "String"
+					},
+					{
+						"name": "average_medicare_payment_amount",
+						"type": "String"
+					},
+					{
+						"name": "average_medicare_standardized_amount",
+						"type": "String"
+					},
+					{
+						"name": "year",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/mpupd_top_n_prcs_table')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureMySql1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureMySqlTable",
+				"schema": [],
+				"typeProperties": {
+					"tableName": "mpupd_top_n_procs"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureMySql1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureMySql1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureMySql",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureMySql1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/BrianMySql2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "MySql",
+				"typeProperties": {
+					"connectionString": "[parameters('BrianMySql2_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MySql1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "MySql",
+				"typeProperties": {
+					"connectionString": "[parameters('MySql1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CleanStrings')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "MPUPD",
+								"type": "DatasetReference"
+							},
+							"name": "PhycisianCompare"
+						}
+					],
+					"sinks": [
+						{
+							"linkedService": {
+								"referenceName": "AzureBlobStorage1",
+								"type": "LinkedServiceReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "DerivedColumn1"
+						}
+					],
+					"script": "source(output(\n\t\tnational_provider_identifier as string,\n\t\tlast_name_organization_name_of_the_provider as string,\n\t\tfirst_name_of_the_provider as string,\n\t\tmiddle_initial_of_the_provider as string,\n\t\tcredentials_of_the_provider as string,\n\t\tgender_of_the_provider as string,\n\t\tentity_type_of_the_provider as string,\n\t\tstreet_address_1_of_the_provider as string,\n\t\tstreet_address_2_of_the_provider as string,\n\t\tcity_of_the_provider as string,\n\t\tzip_code_of_the_provider as string,\n\t\tstate_code_of_the_provider as string,\n\t\tcountry_code_of_the_provider as string,\n\t\tprovider_type as string,\n\t\tmedicare_participation_indicator as string,\n\t\tplace_of_service as string,\n\t\thcpcs_code as string,\n\t\thcpcs_description as string,\n\t\thcpcs_drug_indicator as string,\n\t\tnumber_of_services as string,\n\t\tnumber_of_medicare_beneficiaries as string,\n\t\tnumber_of_distinct_medicare_beneficiary_per_day_services as string,\n\t\taverage_medicare_allowed_amount as string,\n\t\taverage_submitted_charge_amount as string,\n\t\taverage_medicare_payment_amount as string,\n\t\taverage_medicare_standardized_amount as string,\n\t\tyear as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tlimit: 100) ~> PhycisianCompare\nPhycisianCompare derive(each(match(type=='string'), $$ + '_clean' = regexReplace($$, '(\\\\w)', ''))) ~> DerivedColumn1\nDerivedColumn1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'delta',\n\tcontainer: 'espy360blob1',\n\ttruncate: false,\n\tmergeSchema: false,\n\tvacuum: 0,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/MPUPD')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Top20Proc')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "MPUPD",
+								"type": "DatasetReference"
+							},
+							"name": "MPUPD"
+						}
+					],
+					"sinks": [
+						{
+							"linkedService": {
+								"referenceName": "AzureBlobStorage1",
+								"type": "LinkedServiceReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "NumberOfProc"
+						},
+						{
+							"name": "SortedByCount"
+						}
+					],
+					"script": "source(output(\n\t\tnational_provider_identifier as string,\n\t\tlast_name_organization_name_of_the_provider as string,\n\t\tfirst_name_of_the_provider as string,\n\t\tmiddle_initial_of_the_provider as string,\n\t\tcredentials_of_the_provider as string,\n\t\tgender_of_the_provider as string,\n\t\tentity_type_of_the_provider as string,\n\t\tstreet_address_1_of_the_provider as string,\n\t\tstreet_address_2_of_the_provider as string,\n\t\tcity_of_the_provider as string,\n\t\tzip_code_of_the_provider as string,\n\t\tstate_code_of_the_provider as string,\n\t\tcountry_code_of_the_provider as string,\n\t\tprovider_type as string,\n\t\tmedicare_participation_indicator as string,\n\t\tplace_of_service as string,\n\t\thcpcs_code as string,\n\t\thcpcs_description as string,\n\t\thcpcs_drug_indicator as string,\n\t\tnumber_of_services as string,\n\t\tnumber_of_medicare_beneficiaries as string,\n\t\tnumber_of_distinct_medicare_beneficiary_per_day_services as string,\n\t\taverage_medicare_allowed_amount as string,\n\t\taverage_submitted_charge_amount as string,\n\t\taverage_medicare_payment_amount as string,\n\t\taverage_medicare_standardized_amount as string,\n\t\tyear as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> MPUPD\nMPUPD aggregate(groupBy(national_provider_identifier,\n\t\tyear,\n\t\thcpcs_code),\n\t{$$} = count()) ~> NumberOfProc\nNumberOfProc sort(asc(national_provider_identifier, true),\n\tasc(hcpcs_code, true),\n\tasc(year, true),\n\tdesc({$$}, true)) ~> SortedByCount\nSortedByCount sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'delta',\n\tcontainer: 'espy360blob1',\n\ttruncate: false,\n\tmergeSchema: false,\n\tvacuum: 0,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/MPUPD')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		}
+	]
+}
