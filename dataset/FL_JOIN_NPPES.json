@@ -12,7 +12,7 @@
 				"type": "AzureBlobStorageLocation",
 				"container": "espy360blob1"
 			},
-			"columnDelimiter": "|",
+			"columnDelimiter": "\t",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
