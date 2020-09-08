@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"container": "espy360blob1"
+				"container": "otuputcontainer"
 			},
 			"columnDelimiter": "\t",
 			"escapeChar": "\\",
