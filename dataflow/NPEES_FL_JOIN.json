@@ -1,0 +1,12 @@
+{
+	"name": "NPEES_FL_JOIN",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"script": ""
+		}
+	}
+}
