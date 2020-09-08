@@ -1,0 +1,80 @@
+{
+	"name": "FL_CSV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "FL_File.csv",
+				"container": "espy360blob1"
+			},
+			"columnDelimiter": "\t",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "profession_code",
+				"type": "String"
+			},
+			{
+				"name": "profession_rank_code",
+				"type": "String"
+			},
+			{
+				"name": "licensure_number",
+				"type": "String"
+			},
+			{
+				"name": "licensure_status",
+				"type": "String"
+			},
+			{
+				"name": "licensure_activity_status",
+				"type": "String"
+			},
+			{
+				"name": "original_licensure_date",
+				"type": "String"
+			},
+			{
+				"name": "expiration_date",
+				"type": "String"
+			},
+			{
+				"name": "status_effective_date",
+				"type": "String"
+			},
+			{
+				"name": "first_name",
+				"type": "String"
+			},
+			{
+				"name": "middle_name",
+				"type": "String"
+			},
+			{
+				"name": "last_name",
+				"type": "String"
+			},
+			{
+				"name": "administrative_complaints_found",
+				"type": "String"
+			},
+			{
+				"name": "emerg_suspension_restrict_orders",
+				"type": "String"
+			},
+			{
+				"name": "final_orders_found",
+				"type": "String"
+			}
+		]
+	}
+}
