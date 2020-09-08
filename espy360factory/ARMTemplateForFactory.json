@@ -29,144 +29,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/Copy Top n Procs')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "espy360blob1//MPUPD_Top_N_Procs.csv"
-							},
-							{
-								"name": "Destination",
-								"value": "mpupd_top_n_procs"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "AzureMySqlSink",
-								"writeBatchSize": 10000,
-								"writeBatchTimeout": "00:00:30"
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "national_provider_identifier",
-											"type": "Int32",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "national_provider_identifier",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "hcpcs_code",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "hcpcs_code",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "year",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "year",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "proc_count",
-											"type": "Int32",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "proc_count",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "rank",
-											"type": "Int32",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "rank",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "MPUDP_Top_N_Procs",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "top_n_table",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/MPUDP_Top_N_Procs')]",
-				"[concat(variables('factoryId'), '/datasets/top_n_table')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/Copy MPUPD')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -558,6 +420,144 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/MPUPD')]",
 				"[concat(variables('factoryId'), '/datasets/AzureMySqlTable1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Copy Top n Procs')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "espy360blob1//MPUPD_Top_N_Procs.csv"
+							},
+							{
+								"name": "Destination",
+								"value": "mpupd_top_n_procs"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureMySqlSink",
+								"writeBatchSize": 10000,
+								"writeBatchTimeout": "00:00:30"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "national_provider_identifier",
+											"type": "Int32",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "national_provider_identifier",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "hcpcs_code",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "hcpcs_code",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "year",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "year",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "proc_count",
+											"type": "Int32",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "proc_count",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "rank",
+											"type": "Int32",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "rank",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "MPUDP_Top_N_Procs",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "top_n_table",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/MPUDP_Top_N_Procs')]",
+				"[concat(variables('factoryId'), '/datasets/top_n_table')]"
 			]
 		},
 		{
@@ -1017,6 +1017,2224 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/MPUPD')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/NPPES')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureMySql1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureMySqlTable",
+				"schema": [],
+				"typeProperties": {
+					"tableName": "nppes"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureMySql1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FL_license')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureMySql1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureMySqlTable",
+				"schema": [],
+				"typeProperties": {
+					"tableName": "floridalicensestatus"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureMySql1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureMySqlSource",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "national_provider_identifier",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "national_provider_identifier",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "entity_type_code",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "entity_type_code",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "replacement_npi",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "replacement_npi",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "employer_identification_number",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "employer_identification_number",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "legal_business_name",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "legal_business_name",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "last_name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "last_name",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "first_name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "first_name",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "middle_name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "middle_name",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "name_prefix",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "name_prefix",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "name_suffix",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "name_suffix",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "credential",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "credential",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_other_organization_name",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_other_organization_name",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_other_organization_name_type_code",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_other_organization_name_type_code",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "last_name_other",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "last_name_other",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "first_name_other",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "first_name_other",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "middle_name_other",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "middle_name_other",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "name_prefix_other",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "name_prefix_other",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "name_suffix_other",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "name_suffix_other",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "credential_other",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "credential_other",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "other_last_name_type_code",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "other_last_name_type_code",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "business_mailing_address_line1",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "business_mailing_address_line1",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "business_mailing_address_line2",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "business_mailing_address_line2",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "business_mailing_address_city",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "business_mailing_address_city",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "business_mailing_address_state",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "business_mailing_address_state",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "business_mailing_address_postal_code",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "business_mailing_address_postal_code",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "business_mailing_address_country_code",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "business_mailing_address_country_code",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "business_mailing_address_phone",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "business_mailing_address_phone",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "business_mailing_address_fax",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "business_mailing_address_fax",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "practice_location_address_line1",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "practice_location_address_line1",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "practice_location_address_line2",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "practice_location_address_line2",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "practice_location_address_city",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "practice_location_address_city",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "practice_location_address_state",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "practice_location_address_state",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "practice_location_address_postal_code",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "practice_location_address_postal_code",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "practice_location_address_country_code",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "practice_location_address_country_code",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "practice_location_address_phone",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "practice_location_address_phone",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "practice_location_address_fax",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "practice_location_address_fax",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_enumeration_date",
+											"type": "DateTime",
+											"physicalType": "date"
+										},
+										"sink": {
+											"name": "provider_enumeration_date",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "last_update_date",
+											"type": "DateTime",
+											"physicalType": "date"
+										},
+										"sink": {
+											"name": "last_update_date",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "npi_deactivation_reason_code",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "npi_deactivation_reason_code",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "npi_deactivation_date",
+											"type": "DateTime",
+											"physicalType": "date"
+										},
+										"sink": {
+											"name": "npi_deactivation_date",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "npi_reactivation_date",
+											"type": "DateTime",
+											"physicalType": "date"
+										},
+										"sink": {
+											"name": "npi_reactivation_date",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "gender",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "gender",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "authorized_official_last_name",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "authorized_official_last_name",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "authorized_official_first_name",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "authorized_official_first_name",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "authorized_official_middle_name",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "authorized_official_middle_name",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "authorized_official_title_or_position",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "authorized_official_title_or_position",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "authorized_official_telephone_number",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "authorized_official_telephone_number",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_code_1",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_code_1",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_1",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_1",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_state_code_1",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_state_code_1",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_primary_taxonomy_switch_1",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_primary_taxonomy_switch_1",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_code_2",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_code_2",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_2",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_2",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_state_code_2",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_state_code_2",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_primary_taxonomy_switch_2",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_primary_taxonomy_switch_2",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_code_3",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_code_3",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_3",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_3",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_state_code_3",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_state_code_3",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_primary_taxonomy_switch_3",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_primary_taxonomy_switch_3",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_code_4",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_code_4",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_4",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_4",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_state_code_4",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_state_code_4",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_primary_taxonomy_switch_4",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_primary_taxonomy_switch_4",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_code_5",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_code_5",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_5",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_5",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_state_code_5",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_state_code_5",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_primary_taxonomy_switch_5",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_primary_taxonomy_switch_5",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_code_6",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_code_6",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_6",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_6",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_state_code_6",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_state_code_6",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_primary_taxonomy_switch_6",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_primary_taxonomy_switch_6",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_code_7",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_code_7",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_7",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_7",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_state_code_7",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_state_code_7",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_primary_taxonomy_switch_7",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_primary_taxonomy_switch_7",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_code_8",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_code_8",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_8",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_8",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_state_code_8",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_state_code_8",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_primary_taxonomy_switch_8",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_primary_taxonomy_switch_8",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_code_9",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_code_9",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_9",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_9",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_state_code_9",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_state_code_9",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_primary_taxonomy_switch_9",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_primary_taxonomy_switch_9",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_code_10",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_code_10",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_10",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_10",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_state_code_10",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_state_code_10",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_primary_taxonomy_switch_10",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_primary_taxonomy_switch_10",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_code_11",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_code_11",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_11",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_11",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_state_code_11",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_state_code_11",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_primary_taxonomy_switch_11",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_primary_taxonomy_switch_11",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_code_12",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_code_12",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_12",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_12",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_state_code_12",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_state_code_12",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_primary_taxonomy_switch_12",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_primary_taxonomy_switch_12",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_code_13",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_code_13",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_13",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_13",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_state_code_13",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_state_code_13",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_primary_taxonomy_switch_13",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_primary_taxonomy_switch_13",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_code_14",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_code_14",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_14",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_14",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_state_code_14",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_state_code_14",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_primary_taxonomy_switch_14",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_primary_taxonomy_switch_14",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_code_15",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_code_15",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_15",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_15",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_license_number_state_code_15",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "provider_license_number_state_code_15",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_primary_taxonomy_switch_15",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_primary_taxonomy_switch_15",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "is_sole_proprietor",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "is_sole_proprietor",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "is_organization_subpart",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "is_organization_subpart",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "parent_organization_lbn",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "parent_organization_lbn",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "parent_organization_tin",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "parent_organization_tin",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "authorized_official_name_prefix_text",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "authorized_official_name_prefix_text",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "authorized_official_name_suffix_text",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "authorized_official_name_suffix_text",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "authorized_official_credential_text",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "authorized_official_credential_text",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_group_1",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_group_1",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_group_2",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_group_2",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_group_3",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_group_3",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_group_4",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_group_4",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_group_5",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_group_5",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_group_6",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_group_6",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_group_7",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_group_7",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_group_8",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_group_8",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_group_9",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_group_9",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_group_10",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_group_10",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_group_11",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_group_11",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_group_12",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_group_12",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_group_13",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_group_13",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_group_14",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_group_14",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "healthcare_provider_taxonomy_group_15",
+											"type": "String",
+											"physicalType": "text"
+										},
+										"sink": {
+											"name": "healthcare_provider_taxonomy_group_15",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "certification_date",
+											"type": "DateTime",
+											"physicalType": "date"
+										},
+										"sink": {
+											"name": "certification_date",
+											"type": "String",
+											"physicalType": "String"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "NPPES",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "NPPES_CSV",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/NPPES')]",
+				"[concat(variables('factoryId'), '/datasets/NPPES_CSV')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/NPPES_CSV')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NPPES_File.csv",
+						"container": "espy360blob1"
+					},
+					"columnDelimiter": "\t",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "national_provider_identifier",
+						"type": "String"
+					},
+					{
+						"name": "entity_type_code",
+						"type": "String"
+					},
+					{
+						"name": "replacement_npi",
+						"type": "String"
+					},
+					{
+						"name": "employer_identification_number",
+						"type": "String"
+					},
+					{
+						"name": "legal_business_name",
+						"type": "String"
+					},
+					{
+						"name": "last_name",
+						"type": "String"
+					},
+					{
+						"name": "first_name",
+						"type": "String"
+					},
+					{
+						"name": "middle_name",
+						"type": "String"
+					},
+					{
+						"name": "name_prefix",
+						"type": "String"
+					},
+					{
+						"name": "name_suffix",
+						"type": "String"
+					},
+					{
+						"name": "credential",
+						"type": "String"
+					},
+					{
+						"name": "provider_other_organization_name",
+						"type": "String"
+					},
+					{
+						"name": "provider_other_organization_name_type_code",
+						"type": "String"
+					},
+					{
+						"name": "last_name_other",
+						"type": "String"
+					},
+					{
+						"name": "first_name_other",
+						"type": "String"
+					},
+					{
+						"name": "middle_name_other",
+						"type": "String"
+					},
+					{
+						"name": "name_prefix_other",
+						"type": "String"
+					},
+					{
+						"name": "name_suffix_other",
+						"type": "String"
+					},
+					{
+						"name": "credential_other",
+						"type": "String"
+					},
+					{
+						"name": "other_last_name_type_code",
+						"type": "String"
+					},
+					{
+						"name": "business_mailing_address_line1",
+						"type": "String"
+					},
+					{
+						"name": "business_mailing_address_line2",
+						"type": "String"
+					},
+					{
+						"name": "business_mailing_address_city",
+						"type": "String"
+					},
+					{
+						"name": "business_mailing_address_state",
+						"type": "String"
+					},
+					{
+						"name": "business_mailing_address_postal_code",
+						"type": "String"
+					},
+					{
+						"name": "business_mailing_address_country_code",
+						"type": "String"
+					},
+					{
+						"name": "business_mailing_address_phone",
+						"type": "String"
+					},
+					{
+						"name": "business_mailing_address_fax",
+						"type": "String"
+					},
+					{
+						"name": "practice_location_address_line1",
+						"type": "String"
+					},
+					{
+						"name": "practice_location_address_line2",
+						"type": "String"
+					},
+					{
+						"name": "practice_location_address_city",
+						"type": "String"
+					},
+					{
+						"name": "practice_location_address_state",
+						"type": "String"
+					},
+					{
+						"name": "practice_location_address_postal_code",
+						"type": "String"
+					},
+					{
+						"name": "practice_location_address_country_code",
+						"type": "String"
+					},
+					{
+						"name": "practice_location_address_phone",
+						"type": "String"
+					},
+					{
+						"name": "practice_location_address_fax",
+						"type": "String"
+					},
+					{
+						"name": "provider_enumeration_date",
+						"type": "String"
+					},
+					{
+						"name": "last_update_date",
+						"type": "String"
+					},
+					{
+						"name": "npi_deactivation_reason_code",
+						"type": "String"
+					},
+					{
+						"name": "npi_deactivation_date",
+						"type": "String"
+					},
+					{
+						"name": "npi_reactivation_date",
+						"type": "String"
+					},
+					{
+						"name": "gender",
+						"type": "String"
+					},
+					{
+						"name": "authorized_official_last_name",
+						"type": "String"
+					},
+					{
+						"name": "authorized_official_first_name",
+						"type": "String"
+					},
+					{
+						"name": "authorized_official_middle_name",
+						"type": "String"
+					},
+					{
+						"name": "authorized_official_title_or_position",
+						"type": "String"
+					},
+					{
+						"name": "authorized_official_telephone_number",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_code_1",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_1",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_state_code_1",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_primary_taxonomy_switch_1",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_code_2",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_2",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_state_code_2",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_primary_taxonomy_switch_2",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_code_3",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_3",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_state_code_3",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_primary_taxonomy_switch_3",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_code_4",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_4",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_state_code_4",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_primary_taxonomy_switch_4",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_code_5",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_5",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_state_code_5",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_primary_taxonomy_switch_5",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_code_6",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_6",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_state_code_6",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_primary_taxonomy_switch_6",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_code_7",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_7",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_state_code_7",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_primary_taxonomy_switch_7",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_code_8",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_8",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_state_code_8",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_primary_taxonomy_switch_8",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_code_9",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_9",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_state_code_9",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_primary_taxonomy_switch_9",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_code_10",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_10",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_state_code_10",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_primary_taxonomy_switch_10",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_code_11",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_11",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_state_code_11",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_primary_taxonomy_switch_11",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_code_12",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_12",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_state_code_12",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_primary_taxonomy_switch_12",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_code_13",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_13",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_state_code_13",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_primary_taxonomy_switch_13",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_code_14",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_14",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_state_code_14",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_primary_taxonomy_switch_14",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_code_15",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_15",
+						"type": "String"
+					},
+					{
+						"name": "provider_license_number_state_code_15",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_primary_taxonomy_switch_15",
+						"type": "String"
+					},
+					{
+						"name": "is_sole_proprietor",
+						"type": "String"
+					},
+					{
+						"name": "is_organization_subpart",
+						"type": "String"
+					},
+					{
+						"name": "parent_organization_lbn",
+						"type": "String"
+					},
+					{
+						"name": "parent_organization_tin",
+						"type": "String"
+					},
+					{
+						"name": "authorized_official_name_prefix_text",
+						"type": "String"
+					},
+					{
+						"name": "authorized_official_name_suffix_text",
+						"type": "String"
+					},
+					{
+						"name": "authorized_official_credential_text",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_group_1",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_group_2",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_group_3",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_group_4",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_group_5",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_group_6",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_group_7",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_group_8",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_group_9",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_group_10",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_group_11",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_group_12",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_group_13",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_group_14",
+						"type": "String"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_group_15",
+						"type": "String"
+					},
+					{
+						"name": "certification_date",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
 			]
 		}
