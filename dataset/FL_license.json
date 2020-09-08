@@ -1,0 +1,15 @@
+{
+	"name": "FL_license",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureMySql1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureMySqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "floridalicensestatus"
+		}
+	}
+}
