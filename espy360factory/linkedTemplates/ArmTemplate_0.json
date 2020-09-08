@@ -171,6 +171,163 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/FL_CSV')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "FL_File.csv",
+						"container": "espy360blob1"
+					},
+					"columnDelimiter": "\t",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "profession_code",
+						"type": "String"
+					},
+					{
+						"name": "profession_rank_code",
+						"type": "String"
+					},
+					{
+						"name": "licensure_number",
+						"type": "String"
+					},
+					{
+						"name": "licensure_status",
+						"type": "String"
+					},
+					{
+						"name": "licensure_activity_status",
+						"type": "String"
+					},
+					{
+						"name": "original_licensure_date",
+						"type": "String"
+					},
+					{
+						"name": "expiration_date",
+						"type": "String"
+					},
+					{
+						"name": "status_effective_date",
+						"type": "String"
+					},
+					{
+						"name": "first_name",
+						"type": "String"
+					},
+					{
+						"name": "middle_name",
+						"type": "String"
+					},
+					{
+						"name": "last_name",
+						"type": "String"
+					},
+					{
+						"name": "administrative_complaints_found",
+						"type": "String"
+					},
+					{
+						"name": "emerg_suspension_restrict_orders",
+						"type": "String"
+					},
+					{
+						"name": "final_orders_found",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FL_JOIN_NPPES')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "otuputcontainer"
+					},
+					"columnDelimiter": "|",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "licensure_status",
+						"type": "String"
+					},
+					{
+						"name": "national_provider_identifier",
+						"type": "String"
+					},
+					{
+						"name": "last_name",
+						"type": "String"
+					},
+					{
+						"name": "first_name",
+						"type": "String"
+					},
+					{
+						"name": "middle_name",
+						"type": "String"
+					},
+					{
+						"name": "practice_location_address_state",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FL_license')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureMySql1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureMySqlTable",
+				"schema": [],
+				"typeProperties": {
+					"tableName": "floridalicensestatus"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureMySql1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/MPUDP_Top_N_Procs')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -359,57 +516,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/top_n_table')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureMySql1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureMySqlTable",
-				"schema": [
-					{
-						"name": "national_provider_identifier",
-						"type": "int",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "hcpcs_code",
-						"type": "varchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "year",
-						"type": "varchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "proc_count",
-						"type": "int",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "rank",
-						"type": "int",
-						"precision": 0,
-						"scale": 0
-					}
-				],
-				"typeProperties": {
-					"tableName": "mpupd_top_n_procs"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureMySql1')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/NPPES')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -423,26 +529,6 @@
 				"schema": [],
 				"typeProperties": {
 					"tableName": "nppes"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureMySql1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/FL_license')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureMySql1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureMySqlTable",
-				"schema": [],
-				"typeProperties": {
-					"tableName": "floridalicensestatus"
 				}
 			},
 			"dependsOn": [
@@ -999,140 +1085,311 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/FL_CSV')]",
+			"name": "[concat(parameters('factoryName'), '/florida_nppes_join_table')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
+					"referenceName": "AzureMySql1",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "DelimitedText",
+				"type": "AzureMySqlTable",
+				"schema": [],
 				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "FL_File.csv",
-						"container": "espy360blob1"
-					},
-					"columnDelimiter": "\t",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "profession_code",
-						"type": "String"
-					},
-					{
-						"name": "profession_rank_code",
-						"type": "String"
-					},
-					{
-						"name": "licensure_number",
-						"type": "String"
-					},
-					{
-						"name": "licensure_status",
-						"type": "String"
-					},
-					{
-						"name": "licensure_activity_status",
-						"type": "String"
-					},
-					{
-						"name": "original_licensure_date",
-						"type": "String"
-					},
-					{
-						"name": "expiration_date",
-						"type": "String"
-					},
-					{
-						"name": "status_effective_date",
-						"type": "String"
-					},
-					{
-						"name": "first_name",
-						"type": "String"
-					},
-					{
-						"name": "middle_name",
-						"type": "String"
-					},
-					{
-						"name": "last_name",
-						"type": "String"
-					},
-					{
-						"name": "administrative_complaints_found",
-						"type": "String"
-					},
-					{
-						"name": "emerg_suspension_restrict_orders",
-						"type": "String"
-					},
-					{
-						"name": "final_orders_found",
-						"type": "String"
-					}
-				]
+					"tableName": "florida_nppes"
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureMySql1')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/FL_JOIN_NPPES')]",
+			"name": "[concat(parameters('factoryName'), '/top_n_table')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
+					"referenceName": "AzureMySql1",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"container": "espy360blob1"
-					},
-					"columnDelimiter": "\t",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
+				"type": "AzureMySqlTable",
 				"schema": [
 					{
-						"name": "licensure_status",
-						"type": "String"
-					},
-					{
 						"name": "national_provider_identifier",
-						"type": "String"
+						"type": "int",
+						"precision": 0,
+						"scale": 0
 					},
 					{
-						"name": "last_name",
-						"type": "String"
+						"name": "hcpcs_code",
+						"type": "varchar",
+						"precision": 0,
+						"scale": 0
 					},
 					{
-						"name": "first_name",
-						"type": "String"
+						"name": "year",
+						"type": "varchar",
+						"precision": 0,
+						"scale": 0
 					},
 					{
-						"name": "middle_name",
-						"type": "String"
+						"name": "proc_count",
+						"type": "int",
+						"precision": 0,
+						"scale": 0
 					},
 					{
-						"name": "practice_location_address_state",
-						"type": "String"
+						"name": "rank",
+						"type": "int",
+						"precision": 0,
+						"scale": 0
 					}
-				]
+				],
+				"typeProperties": {
+					"tableName": "mpupd_top_n_procs"
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureMySql1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Copy FL Local')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureMySqlSource",
+								"queryTimeout": "02:00:00"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "profession_code",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "profession_code",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "profession_rank_code",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "profession_rank_code",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "licensure_number",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "licensure_number",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "licensure_status",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "licensure_status",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "licensure_activity_status",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "licensure_activity_status",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "original_licensure_date",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "original_licensure_date",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "expiration_date",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "expiration_date",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "status_effective_date",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "status_effective_date",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "first_name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "first_name",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "middle_name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "middle_name",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "last_name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "last_name",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "administrative_complaints_found",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "administrative_complaints_found",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "emerg_suspension_restrict_orders",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "emerg_suspension_restrict_orders",
+											"type": "String",
+											"physicalType": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "final_orders_found",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "final_orders_found",
+											"type": "String",
+											"physicalType": "String"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FL_license",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "FL_CSV",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/FL_license')]",
+				"[concat(variables('factoryId'), '/datasets/FL_CSV')]"
 			]
 		},
 		{
@@ -1527,223 +1784,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/MPUPD')]",
 				"[concat(variables('factoryId'), '/datasets/AzureMySqlTable1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Copy Top n Procs')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "espy360blob1//MPUPD_Top_N_Procs.csv"
-							},
-							{
-								"name": "Destination",
-								"value": "mpupd_top_n_procs"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "AzureMySqlSink",
-								"writeBatchSize": 10000,
-								"writeBatchTimeout": "00:00:30"
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "national_provider_identifier",
-											"type": "Int32",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "national_provider_identifier",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "hcpcs_code",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "hcpcs_code",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "year",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "year",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "proc_count",
-											"type": "Int32",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "proc_count",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "rank",
-											"type": "Int32",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "rank",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "MPUDP_Top_N_Procs",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "top_n_table",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/MPUDP_Top_N_Procs')]",
-				"[concat(variables('factoryId'), '/datasets/top_n_table')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CleanStrings')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "MPUPD",
-								"type": "DatasetReference"
-							},
-							"name": "PhycisianCompare"
-						}
-					],
-					"sinks": [
-						{
-							"linkedService": {
-								"referenceName": "AzureBlobStorage1",
-								"type": "LinkedServiceReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "DerivedColumn1"
-						}
-					],
-					"script": "source(output(\n\t\tnational_provider_identifier as string,\n\t\tlast_name_organization_name_of_the_provider as string,\n\t\tfirst_name_of_the_provider as string,\n\t\tmiddle_initial_of_the_provider as string,\n\t\tcredentials_of_the_provider as string,\n\t\tgender_of_the_provider as string,\n\t\tentity_type_of_the_provider as string,\n\t\tstreet_address_1_of_the_provider as string,\n\t\tstreet_address_2_of_the_provider as string,\n\t\tcity_of_the_provider as string,\n\t\tzip_code_of_the_provider as string,\n\t\tstate_code_of_the_provider as string,\n\t\tcountry_code_of_the_provider as string,\n\t\tprovider_type as string,\n\t\tmedicare_participation_indicator as string,\n\t\tplace_of_service as string,\n\t\thcpcs_code as string,\n\t\thcpcs_description as string,\n\t\thcpcs_drug_indicator as string,\n\t\tnumber_of_services as string,\n\t\tnumber_of_medicare_beneficiaries as string,\n\t\tnumber_of_distinct_medicare_beneficiary_per_day_services as string,\n\t\taverage_medicare_allowed_amount as string,\n\t\taverage_submitted_charge_amount as string,\n\t\taverage_medicare_payment_amount as string,\n\t\taverage_medicare_standardized_amount as string,\n\t\tyear as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tlimit: 100) ~> PhycisianCompare\nPhycisianCompare derive(each(match(type=='string'), $$ + '_clean' = regexReplace($$, '(\\\\w)', ''))) ~> DerivedColumn1\nDerivedColumn1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'delta',\n\tcontainer: 'espy360blob1',\n\ttruncate: false,\n\tmergeSchema: false,\n\tvacuum: 0,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/MPUPD')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Top20Proc')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "MPUPD",
-								"type": "DatasetReference"
-							},
-							"name": "MPUPD"
-						}
-					],
-					"sinks": [
-						{
-							"linkedService": {
-								"referenceName": "AzureBlobStorage1",
-								"type": "LinkedServiceReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "NumberOfProc"
-						},
-						{
-							"name": "SortedByCount"
-						}
-					],
-					"script": "source(output(\n\t\tnational_provider_identifier as string,\n\t\tlast_name_organization_name_of_the_provider as string,\n\t\tfirst_name_of_the_provider as string,\n\t\tmiddle_initial_of_the_provider as string,\n\t\tcredentials_of_the_provider as string,\n\t\tgender_of_the_provider as string,\n\t\tentity_type_of_the_provider as string,\n\t\tstreet_address_1_of_the_provider as string,\n\t\tstreet_address_2_of_the_provider as string,\n\t\tcity_of_the_provider as string,\n\t\tzip_code_of_the_provider as string,\n\t\tstate_code_of_the_provider as string,\n\t\tcountry_code_of_the_provider as string,\n\t\tprovider_type as string,\n\t\tmedicare_participation_indicator as string,\n\t\tplace_of_service as string,\n\t\thcpcs_code as string,\n\t\thcpcs_description as string,\n\t\thcpcs_drug_indicator as string,\n\t\tnumber_of_services as string,\n\t\tnumber_of_medicare_beneficiaries as string,\n\t\tnumber_of_distinct_medicare_beneficiary_per_day_services as string,\n\t\taverage_medicare_allowed_amount as string,\n\t\taverage_submitted_charge_amount as string,\n\t\taverage_medicare_payment_amount as string,\n\t\taverage_medicare_standardized_amount as string,\n\t\tyear as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> MPUPD\nMPUPD aggregate(groupBy(national_provider_identifier,\n\t\tyear,\n\t\thcpcs_code),\n\t{$$} = count()) ~> NumberOfProc\nNumberOfProc sort(asc(national_provider_identifier, true),\n\tasc(hcpcs_code, true),\n\tasc(year, true),\n\tdesc({$$}, true)) ~> SortedByCount\nSortedByCount sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'delta',\n\tcontainer: 'espy360blob1',\n\ttruncate: false,\n\tmergeSchema: false,\n\tvacuum: 0,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/MPUPD')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
 			]
 		},
 		{
@@ -3376,7 +3416,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Copy FL Local')]",
+			"name": "[concat(parameters('factoryName'), '/Copy Top n Procs')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -3392,22 +3432,31 @@
 							"secureOutput": false,
 							"secureInput": false
 						},
-						"userProperties": [],
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "espy360blob1//MPUPD_Top_N_Procs.csv"
+							},
+							{
+								"name": "Destination",
+								"value": "mpupd_top_n_procs"
+							}
+						],
 						"typeProperties": {
 							"source": {
-								"type": "AzureMySqlSource",
-								"queryTimeout": "02:00:00"
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
+								"type": "DelimitedTextSource",
 								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true
 								},
 								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
+									"type": "DelimitedTextReadSettings"
 								}
+							},
+							"sink": {
+								"type": "AzureMySqlSink",
+								"writeBatchSize": 10000,
+								"writeBatchTimeout": "00:00:30"
 							},
 							"enableStaging": false,
 							"translator": {
@@ -3415,170 +3464,62 @@
 								"mappings": [
 									{
 										"source": {
-											"name": "profession_code",
+											"name": "national_provider_identifier",
+											"type": "Int32",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "national_provider_identifier",
 											"type": "Int32",
 											"physicalType": "int"
-										},
-										"sink": {
-											"name": "profession_code",
-											"type": "String",
-											"physicalType": "String"
 										}
 									},
 									{
 										"source": {
-											"name": "profession_rank_code",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "profession_rank_code",
+											"name": "hcpcs_code",
 											"type": "String",
 											"physicalType": "String"
+										},
+										"sink": {
+											"name": "hcpcs_code",
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
 										"source": {
-											"name": "licensure_number",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "licensure_number",
+											"name": "year",
 											"type": "String",
 											"physicalType": "String"
+										},
+										"sink": {
+											"name": "year",
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
 										"source": {
-											"name": "licensure_status",
-											"type": "String",
-											"physicalType": "varchar"
+											"name": "proc_count",
+											"type": "Int32",
+											"physicalType": "String"
 										},
 										"sink": {
-											"name": "licensure_status",
-											"type": "String",
-											"physicalType": "String"
+											"name": "proc_count",
+											"type": "Int32",
+											"physicalType": "int"
 										}
 									},
 									{
 										"source": {
-											"name": "licensure_activity_status",
-											"type": "String",
-											"physicalType": "varchar"
+											"name": "rank",
+											"type": "Int32",
+											"physicalType": "String"
 										},
 										"sink": {
-											"name": "licensure_activity_status",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "original_licensure_date",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "original_licensure_date",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "expiration_date",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "expiration_date",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "status_effective_date",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "status_effective_date",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "first_name",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "first_name",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "middle_name",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "middle_name",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "last_name",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "last_name",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "administrative_complaints_found",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "administrative_complaints_found",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "emerg_suspension_restrict_orders",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "emerg_suspension_restrict_orders",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "final_orders_found",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "final_orders_found",
-											"type": "String",
-											"physicalType": "String"
+											"name": "rank",
+											"type": "Int32",
+											"physicalType": "int"
 										}
 									}
 								],
@@ -3591,14 +3532,14 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "FL_license",
+								"referenceName": "MPUDP_Top_N_Procs",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "FL_CSV",
+								"referenceName": "top_n_table",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -3608,8 +3549,46 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/FL_license')]",
-				"[concat(variables('factoryId'), '/datasets/FL_CSV')]"
+				"[concat(variables('factoryId'), '/datasets/MPUDP_Top_N_Procs')]",
+				"[concat(variables('factoryId'), '/datasets/top_n_table')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CleanStrings')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "MPUPD",
+								"type": "DatasetReference"
+							},
+							"name": "PhycisianCompare"
+						}
+					],
+					"sinks": [
+						{
+							"linkedService": {
+								"referenceName": "AzureBlobStorage1",
+								"type": "LinkedServiceReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "DerivedColumn1"
+						}
+					],
+					"script": "source(output(\n\t\tnational_provider_identifier as string,\n\t\tlast_name_organization_name_of_the_provider as string,\n\t\tfirst_name_of_the_provider as string,\n\t\tmiddle_initial_of_the_provider as string,\n\t\tcredentials_of_the_provider as string,\n\t\tgender_of_the_provider as string,\n\t\tentity_type_of_the_provider as string,\n\t\tstreet_address_1_of_the_provider as string,\n\t\tstreet_address_2_of_the_provider as string,\n\t\tcity_of_the_provider as string,\n\t\tzip_code_of_the_provider as string,\n\t\tstate_code_of_the_provider as string,\n\t\tcountry_code_of_the_provider as string,\n\t\tprovider_type as string,\n\t\tmedicare_participation_indicator as string,\n\t\tplace_of_service as string,\n\t\thcpcs_code as string,\n\t\thcpcs_description as string,\n\t\thcpcs_drug_indicator as string,\n\t\tnumber_of_services as string,\n\t\tnumber_of_medicare_beneficiaries as string,\n\t\tnumber_of_distinct_medicare_beneficiary_per_day_services as string,\n\t\taverage_medicare_allowed_amount as string,\n\t\taverage_submitted_charge_amount as string,\n\t\taverage_medicare_payment_amount as string,\n\t\taverage_medicare_standardized_amount as string,\n\t\tyear as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tlimit: 100) ~> PhycisianCompare\nPhycisianCompare derive(each(match(type=='string'), $$ + '_clean' = regexReplace($$, '(\\\\w)', ''))) ~> DerivedColumn1\nDerivedColumn1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'delta',\n\tcontainer: 'espy360blob1',\n\ttruncate: false,\n\tmergeSchema: false,\n\tvacuum: 0,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/MPUPD')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
 			]
 		}
 	]
