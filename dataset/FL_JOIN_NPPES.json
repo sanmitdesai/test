@@ -12,7 +12,7 @@
 				"type": "AzureBlobStorageLocation",
 				"container": "otuputcontainer"
 			},
-			"columnDelimiter": "\t",
+			"columnDelimiter": "|",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
