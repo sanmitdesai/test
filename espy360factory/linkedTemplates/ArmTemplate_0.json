@@ -1156,6 +1156,59 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/join_input_fl_nppes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "JOIN_FL_NPPES_OUTPUT.csv",
+						"container": "otuputcontainer"
+					},
+					"columnDelimiter": "|",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "national_provider_identifier",
+						"type": "String"
+					},
+					{
+						"name": "licensure_status",
+						"type": "String"
+					},
+					{
+						"name": "last_name",
+						"type": "String"
+					},
+					{
+						"name": "first_name",
+						"type": "String"
+					},
+					{
+						"name": "middle_name",
+						"type": "String"
+					},
+					{
+						"name": "practice_location_address_state",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Copy FL Local')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -3551,44 +3604,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/MPUDP_Top_N_Procs')]",
 				"[concat(variables('factoryId'), '/datasets/top_n_table')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CleanStrings')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "MPUPD",
-								"type": "DatasetReference"
-							},
-							"name": "PhycisianCompare"
-						}
-					],
-					"sinks": [
-						{
-							"linkedService": {
-								"referenceName": "AzureBlobStorage1",
-								"type": "LinkedServiceReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "DerivedColumn1"
-						}
-					],
-					"script": "source(output(\n\t\tnational_provider_identifier as string,\n\t\tlast_name_organization_name_of_the_provider as string,\n\t\tfirst_name_of_the_provider as string,\n\t\tmiddle_initial_of_the_provider as string,\n\t\tcredentials_of_the_provider as string,\n\t\tgender_of_the_provider as string,\n\t\tentity_type_of_the_provider as string,\n\t\tstreet_address_1_of_the_provider as string,\n\t\tstreet_address_2_of_the_provider as string,\n\t\tcity_of_the_provider as string,\n\t\tzip_code_of_the_provider as string,\n\t\tstate_code_of_the_provider as string,\n\t\tcountry_code_of_the_provider as string,\n\t\tprovider_type as string,\n\t\tmedicare_participation_indicator as string,\n\t\tplace_of_service as string,\n\t\thcpcs_code as string,\n\t\thcpcs_description as string,\n\t\thcpcs_drug_indicator as string,\n\t\tnumber_of_services as string,\n\t\tnumber_of_medicare_beneficiaries as string,\n\t\tnumber_of_distinct_medicare_beneficiary_per_day_services as string,\n\t\taverage_medicare_allowed_amount as string,\n\t\taverage_submitted_charge_amount as string,\n\t\taverage_medicare_payment_amount as string,\n\t\taverage_medicare_standardized_amount as string,\n\t\tyear as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tlimit: 100) ~> PhycisianCompare\nPhycisianCompare derive(each(match(type=='string'), $$ + '_clean' = regexReplace($$, '(\\\\w)', ''))) ~> DerivedColumn1\nDerivedColumn1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'delta',\n\tcontainer: 'espy360blob1',\n\ttruncate: false,\n\tmergeSchema: false,\n\tvacuum: 0,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/MPUPD')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
 			]
 		}
 	]
