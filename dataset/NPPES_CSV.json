@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "NPPES_File.csv",
 				"container": "espy360blob1"
 			},
 			"columnDelimiter": "\t",
