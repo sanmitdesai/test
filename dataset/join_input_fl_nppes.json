@@ -1,0 +1,48 @@
+{
+	"name": "join_input_fl_nppes",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "JOIN_FL_NPPES_OUTPUT.csv",
+				"container": "otuputcontainer"
+			},
+			"columnDelimiter": "|",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "national_provider_identifier",
+				"type": "String"
+			},
+			{
+				"name": "licensure_status",
+				"type": "String"
+			},
+			{
+				"name": "last_name",
+				"type": "String"
+			},
+			{
+				"name": "first_name",
+				"type": "String"
+			},
+			{
+				"name": "middle_name",
+				"type": "String"
+			},
+			{
+				"name": "practice_location_address_state",
+				"type": "String"
+			}
+		]
+	}
+}
