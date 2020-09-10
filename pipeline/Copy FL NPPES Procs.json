@@ -620,13 +620,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "All_JOIN",
+						"referenceName": "fl_nppes_procs_csv",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "fl_nppes_procs",
+						"referenceName": "fl_nppes_procs_table",
 						"type": "DatasetReference"
 					}
 				]

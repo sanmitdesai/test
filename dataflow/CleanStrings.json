@@ -13,7 +13,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "All_JOIN",
+						"referenceName": "fl_nppes_procs_csv",
 						"type": "DatasetReference"
 					},
 					"name": "source1"

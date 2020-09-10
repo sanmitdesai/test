@@ -1,5 +1,5 @@
 {
-	"name": "fl_nppes_procs",
+	"name": "fl_nppes_procs_table",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureMySql1",

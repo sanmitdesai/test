@@ -1,5 +1,5 @@
 {
-	"name": "All_JOIN",
+	"name": "fl_nppes_procs_csv",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
