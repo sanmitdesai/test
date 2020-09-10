@@ -2470,6 +2470,52 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Join_All')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "JoinProcProvComp",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "JoinProcProvComp",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"FloridaData": {},
+									"NPPESData": {},
+									"PhysicianCompare2017": {},
+									"PhysicianCompareAll": {},
+									"Procs": {},
+									"Write2Blob": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/JoinProcProvComp')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/copy nppes fl join')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -2611,49 +2657,224 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Join_All')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/All_JOIN')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "all_join.csv",
+						"container": "otuputcontainer"
+					},
+					"columnDelimiter": "|",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
 					{
-						"name": "JoinProcProvComp",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "JoinProcProvComp",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"FloridaData": {},
-									"NPPESData": {},
-									"PhysicianCompare2017": {},
-									"PhysicianCompareAll": {},
-									"Procs": {},
-									"Write2Blob": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							}
-						}
+						"name": "national_provider_identifier",
+						"type": "String"
+					},
+					{
+						"name": "year",
+						"type": "String"
+					},
+					{
+						"name": "licensure_status",
+						"type": "String"
+					},
+					{
+						"name": "licensure_activity_status",
+						"type": "String"
+					},
+					{
+						"name": "expiration_date",
+						"type": "String"
+					},
+					{
+						"name": "status_effective_date",
+						"type": "String"
+					},
+					{
+						"name": "last_name",
+						"type": "String"
+					},
+					{
+						"name": "first_name",
+						"type": "String"
+					},
+					{
+						"name": "middle_name",
+						"type": "String"
+					},
+					{
+						"name": "practice_location_address_state",
+						"type": "String"
+					},
+					{
+						"name": "credential",
+						"type": "String"
+					},
+					{
+						"name": "medical_school_name",
+						"type": "String"
+					},
+					{
+						"name": "graduation_year",
+						"type": "String"
+					},
+					{
+						"name": "primary_specialty",
+						"type": "String"
+					},
+					{
+						"name": "all_secondary_specialties",
+						"type": "String"
+					},
+					{
+						"name": "organization_legal_name",
+						"type": "String"
+					},
+					{
+						"name": "number_of_group_practice_members",
+						"type": "String"
+					},
+					{
+						"name": "hospital_affiliation_ccn_1",
+						"type": "String"
+					},
+					{
+						"name": "hospital_affiliation_lbn_1",
+						"type": "String"
+					},
+					{
+						"name": "hospital_affiliation_ccn_2",
+						"type": "String"
+					},
+					{
+						"name": "hospital_affiliation_lbn_2",
+						"type": "String"
+					},
+					{
+						"name": "hospital_affiliation_ccn_3",
+						"type": "String"
+					},
+					{
+						"name": "hospital_affiliation_lbn_3",
+						"type": "String"
+					},
+					{
+						"name": "hospital_affiliation_ccn_4",
+						"type": "String"
+					},
+					{
+						"name": "hospital_affiliation_lbn_4",
+						"type": "String"
+					},
+					{
+						"name": "hospital_affiliation_ccn_5",
+						"type": "String"
+					},
+					{
+						"name": "hospital_affiliation_lbn_5",
+						"type": "String"
+					},
+					{
+						"name": "professional_accepts_medicare_assignment",
+						"type": "String"
+					},
+					{
+						"name": "gender_of_the_provider",
+						"type": "String"
+					},
+					{
+						"name": "entity_type_of_the_provider",
+						"type": "String"
+					},
+					{
+						"name": "provider_type",
+						"type": "String"
+					},
+					{
+						"name": "hcpcs_code",
+						"type": "String"
+					},
+					{
+						"name": "hcpcs_description",
+						"type": "String"
+					},
+					{
+						"name": "hcpcs_drug_indicator",
+						"type": "String"
+					},
+					{
+						"name": "number_of_services",
+						"type": "String"
+					},
+					{
+						"name": "number_of_medicare_beneficiaries",
+						"type": "String"
+					},
+					{
+						"name": "number_of_distinct_medicare_beneficiary_per_day_services",
+						"type": "String"
+					},
+					{
+						"name": "average_medicare_allowed_amount",
+						"type": "String"
+					},
+					{
+						"name": "average_submitted_charge_amount",
+						"type": "String"
+					},
+					{
+						"name": "average_medicare_payment_amount",
+						"type": "String"
+					},
+					{
+						"name": "average_medicare_standardized_amount",
+						"type": "String"
+					},
+					{
+						"name": "apm_affiliation_1",
+						"type": "String"
+					},
+					{
+						"name": "apm_affiliation_2",
+						"type": "String"
+					},
+					{
+						"name": "apm_affiliation_3",
+						"type": "String"
+					},
+					{
+						"name": "apm_affiliation_4",
+						"type": "String"
+					},
+					{
+						"name": "attestation_value",
+						"type": "String"
+					},
+					{
+						"name": "measure_performance_rate",
+						"type": "String"
+					},
+					{
+						"name": "denominator_count",
+						"type": "String"
 					}
-				],
-				"annotations": []
+				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/JoinProcProvComp')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
 			]
 		},
 		{
@@ -4124,6 +4345,13 @@
 								"type": "DatasetReference"
 							},
 							"name": "PhycisianCompare"
+						},
+						{
+							"dataset": {
+								"referenceName": "All_JOIN",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
 						}
 					],
 					"sinks": [
@@ -4138,13 +4366,17 @@
 					"transformations": [
 						{
 							"name": "DerivedColumn1"
+						},
+						{
+							"name": "Aggregate1"
 						}
 					],
-					"script": "source(output(\n\t\tnational_provider_identifier as string,\n\t\tlast_name_organization_name_of_the_provider as string,\n\t\tfirst_name_of_the_provider as string,\n\t\tmiddle_initial_of_the_provider as string,\n\t\tcredentials_of_the_provider as string,\n\t\tgender_of_the_provider as string,\n\t\tentity_type_of_the_provider as string,\n\t\tstreet_address_1_of_the_provider as string,\n\t\tstreet_address_2_of_the_provider as string,\n\t\tcity_of_the_provider as string,\n\t\tzip_code_of_the_provider as string,\n\t\tstate_code_of_the_provider as string,\n\t\tcountry_code_of_the_provider as string,\n\t\tprovider_type as string,\n\t\tmedicare_participation_indicator as string,\n\t\tplace_of_service as string,\n\t\thcpcs_code as string,\n\t\thcpcs_description as string,\n\t\thcpcs_drug_indicator as string,\n\t\tnumber_of_services as string,\n\t\tnumber_of_medicare_beneficiaries as string,\n\t\tnumber_of_distinct_medicare_beneficiary_per_day_services as string,\n\t\taverage_medicare_allowed_amount as string,\n\t\taverage_submitted_charge_amount as string,\n\t\taverage_medicare_payment_amount as string,\n\t\taverage_medicare_standardized_amount as string,\n\t\tyear as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tlimit: 100) ~> PhycisianCompare\nPhycisianCompare derive(each(match(type=='string'), $$ + '_clean' = regexReplace($$, '(\\\\w)', ''))) ~> DerivedColumn1\nDerivedColumn1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'delta',\n\tcontainer: 'espy360blob1',\n\ttruncate: false,\n\tmergeSchema: false,\n\tvacuum: 0,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+					"script": "source(output(\n\t\tnational_provider_identifier as string,\n\t\tlast_name_organization_name_of_the_provider as string,\n\t\tfirst_name_of_the_provider as string,\n\t\tmiddle_initial_of_the_provider as string,\n\t\tcredentials_of_the_provider as string,\n\t\tgender_of_the_provider as string,\n\t\tentity_type_of_the_provider as string,\n\t\tstreet_address_1_of_the_provider as string,\n\t\tstreet_address_2_of_the_provider as string,\n\t\tcity_of_the_provider as string,\n\t\tzip_code_of_the_provider as string,\n\t\tstate_code_of_the_provider as string,\n\t\tcountry_code_of_the_provider as string,\n\t\tprovider_type as string,\n\t\tmedicare_participation_indicator as string,\n\t\tplace_of_service as string,\n\t\thcpcs_code as string,\n\t\thcpcs_description as string,\n\t\thcpcs_drug_indicator as string,\n\t\tnumber_of_services as string,\n\t\tnumber_of_medicare_beneficiaries as string,\n\t\tnumber_of_distinct_medicare_beneficiary_per_day_services as string,\n\t\taverage_medicare_allowed_amount as string,\n\t\taverage_submitted_charge_amount as string,\n\t\taverage_medicare_payment_amount as string,\n\t\taverage_medicare_standardized_amount as string,\n\t\tyear as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false,\n\tlimit: 100) ~> PhycisianCompare\nsource(output(\n\t\tnational_provider_identifier as string,\n\t\tyear as string,\n\t\tlicensure_status as string,\n\t\tlicensure_activity_status as string,\n\t\texpiration_date as string,\n\t\tstatus_effective_date as string,\n\t\tlast_name as string,\n\t\tfirst_name as string,\n\t\tmiddle_name as string,\n\t\tpractice_location_address_state as string,\n\t\tcredential as string,\n\t\tmedical_school_name as string,\n\t\tgraduation_year as string,\n\t\tprimary_specialty as string,\n\t\tall_secondary_specialties as string,\n\t\torganization_legal_name as string,\n\t\tnumber_of_group_practice_members as string,\n\t\thospital_affiliation_ccn_1 as string,\n\t\thospital_affiliation_lbn_1 as string,\n\t\thospital_affiliation_ccn_2 as string,\n\t\thospital_affiliation_lbn_2 as string,\n\t\thospital_affiliation_ccn_3 as string,\n\t\thospital_affiliation_lbn_3 as string,\n\t\thospital_affiliation_ccn_4 as string,\n\t\thospital_affiliation_lbn_4 as string,\n\t\thospital_affiliation_ccn_5 as string,\n\t\thospital_affiliation_lbn_5 as string,\n\t\tprofessional_accepts_medicare_assignment as string,\n\t\tgender_of_the_provider as string,\n\t\tentity_type_of_the_provider as string,\n\t\tprovider_type as string,\n\t\thcpcs_code as string,\n\t\thcpcs_description as string,\n\t\thcpcs_drug_indicator as string,\n\t\tnumber_of_services as string,\n\t\tnumber_of_medicare_beneficiaries as string,\n\t\tnumber_of_distinct_medicare_beneficiary_per_day_services as string,\n\t\taverage_medicare_allowed_amount as string,\n\t\taverage_submitted_charge_amount as string,\n\t\taverage_medicare_payment_amount as string,\n\t\taverage_medicare_standardized_amount as string,\n\t\tapm_affiliation_1 as string,\n\t\tapm_affiliation_2 as string,\n\t\tapm_affiliation_3 as string,\n\t\tapm_affiliation_4 as string,\n\t\tattestation_value as string,\n\t\tmeasure_performance_rate as string,\n\t\tdenominator_count as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1\nPhycisianCompare derive(each(match(type=='string'), $$ + '_clean' = regexReplace($$, '(\\\\w)', ''))) ~> DerivedColumn1\nsource1 aggregate(agg_count = countDistinct(national_provider_identifier)) ~> Aggregate1\nDerivedColumn1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'delta',\n\tcontainer: 'espy360blob1',\n\ttruncate: false,\n\tmergeSchema: false,\n\tvacuum: 0,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/MPUPD')]",
+				"[concat(variables('factoryId'), '/datasets/All_JOIN')]",
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
 			]
 		},
@@ -4216,47 +4448,6 @@
 				"[concat(variables('factoryId'), '/datasets/FL_CSV')]",
 				"[concat(variables('factoryId'), '/datasets/NPPES_CSV')]",
 				"[concat(variables('factoryId'), '/datasets/FL_JOIN_NPPES')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Top20Proc')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "MPUPD",
-								"type": "DatasetReference"
-							},
-							"name": "MPUPD"
-						}
-					],
-					"sinks": [
-						{
-							"linkedService": {
-								"referenceName": "AzureBlobStorage1",
-								"type": "LinkedServiceReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "NumberOfProc"
-						},
-						{
-							"name": "SortedByCount"
-						}
-					],
-					"script": "source(output(\n\t\tnational_provider_identifier as string,\n\t\tlast_name_organization_name_of_the_provider as string,\n\t\tfirst_name_of_the_provider as string,\n\t\tmiddle_initial_of_the_provider as string,\n\t\tcredentials_of_the_provider as string,\n\t\tgender_of_the_provider as string,\n\t\tentity_type_of_the_provider as string,\n\t\tstreet_address_1_of_the_provider as string,\n\t\tstreet_address_2_of_the_provider as string,\n\t\tcity_of_the_provider as string,\n\t\tzip_code_of_the_provider as string,\n\t\tstate_code_of_the_provider as string,\n\t\tcountry_code_of_the_provider as string,\n\t\tprovider_type as string,\n\t\tmedicare_participation_indicator as string,\n\t\tplace_of_service as string,\n\t\thcpcs_code as string,\n\t\thcpcs_description as string,\n\t\thcpcs_drug_indicator as string,\n\t\tnumber_of_services as string,\n\t\tnumber_of_medicare_beneficiaries as string,\n\t\tnumber_of_distinct_medicare_beneficiary_per_day_services as string,\n\t\taverage_medicare_allowed_amount as string,\n\t\taverage_submitted_charge_amount as string,\n\t\taverage_medicare_payment_amount as string,\n\t\taverage_medicare_standardized_amount as string,\n\t\tyear as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> MPUPD\nMPUPD aggregate(groupBy(national_provider_identifier,\n\t\tyear,\n\t\thcpcs_code),\n\t{$$} = count()) ~> NumberOfProc\nNumberOfProc sort(asc(national_provider_identifier, true),\n\tasc(hcpcs_code, true),\n\tasc(year, true),\n\tdesc({$$}, true)) ~> SortedByCount\nSortedByCount sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'delta',\n\tcontainer: 'espy360blob1',\n\ttruncate: false,\n\tmergeSchema: false,\n\tvacuum: 0,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/MPUPD')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
 			]
 		},
 		{
@@ -4375,6 +4566,47 @@
 				"[concat(variables('factoryId'), '/datasets/PC_Nat_down')]",
 				"[concat(variables('factoryId'), '/datasets/MPUPD')]",
 				"[concat(variables('factoryId'), '/datasets/FL_JOIN_NPPES')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Top20Proc')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "MPUPD",
+								"type": "DatasetReference"
+							},
+							"name": "MPUPD"
+						}
+					],
+					"sinks": [
+						{
+							"linkedService": {
+								"referenceName": "AzureBlobStorage1",
+								"type": "LinkedServiceReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "NumberOfProc"
+						},
+						{
+							"name": "SortedByCount"
+						}
+					],
+					"script": "source(output(\n\t\tnational_provider_identifier as string,\n\t\tlast_name_organization_name_of_the_provider as string,\n\t\tfirst_name_of_the_provider as string,\n\t\tmiddle_initial_of_the_provider as string,\n\t\tcredentials_of_the_provider as string,\n\t\tgender_of_the_provider as string,\n\t\tentity_type_of_the_provider as string,\n\t\tstreet_address_1_of_the_provider as string,\n\t\tstreet_address_2_of_the_provider as string,\n\t\tcity_of_the_provider as string,\n\t\tzip_code_of_the_provider as string,\n\t\tstate_code_of_the_provider as string,\n\t\tcountry_code_of_the_provider as string,\n\t\tprovider_type as string,\n\t\tmedicare_participation_indicator as string,\n\t\tplace_of_service as string,\n\t\thcpcs_code as string,\n\t\thcpcs_description as string,\n\t\thcpcs_drug_indicator as string,\n\t\tnumber_of_services as string,\n\t\tnumber_of_medicare_beneficiaries as string,\n\t\tnumber_of_distinct_medicare_beneficiary_per_day_services as string,\n\t\taverage_medicare_allowed_amount as string,\n\t\taverage_submitted_charge_amount as string,\n\t\taverage_medicare_payment_amount as string,\n\t\taverage_medicare_standardized_amount as string,\n\t\tyear as string\n\t),\n\tallowSchemaDrift: false,\n\tvalidateSchema: false) ~> MPUPD\nMPUPD aggregate(groupBy(national_provider_identifier,\n\t\tyear,\n\t\thcpcs_code),\n\t{$$} = count()) ~> NumberOfProc\nNumberOfProc sort(asc(national_provider_identifier, true),\n\tasc(hcpcs_code, true),\n\tasc(year, true),\n\tdesc({$$}, true)) ~> SortedByCount\nSortedByCount sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'delta',\n\tcontainer: 'espy360blob1',\n\ttruncate: false,\n\tmergeSchema: false,\n\tvacuum: 0,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/MPUPD')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
 			]
 		}
 	]
