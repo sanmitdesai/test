@@ -2553,7 +2553,7 @@
 						},
 						{
 							"dataset": {
-								"referenceName": "All_JOIN",
+								"referenceName": "fl_nppes_procs_csv",
 								"type": "DatasetReference"
 							},
 							"name": "source1"
@@ -2842,8 +2842,8 @@
 										},
 										"sink": {
 											"name": "national_provider_identifier",
-											"type": "Int32",
-											"physicalType": "int"
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
@@ -2854,8 +2854,8 @@
 										},
 										"sink": {
 											"name": "event_year",
-											"type": "Int32",
-											"physicalType": "int"
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
@@ -2986,8 +2986,8 @@
 										},
 										"sink": {
 											"name": "graduation_year",
-											"type": "Int32",
-											"physicalType": "int"
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
@@ -3034,8 +3034,8 @@
 										},
 										"sink": {
 											"name": "number_of_group_practice_members",
-											"type": "Int32",
-											"physicalType": "int"
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
@@ -3046,8 +3046,8 @@
 										},
 										"sink": {
 											"name": "hospital_affiliation_ccn_1",
-											"type": "Int32",
-											"physicalType": "int"
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
@@ -3070,8 +3070,8 @@
 										},
 										"sink": {
 											"name": "hospital_affiliation_ccn_2",
-											"type": "Int32",
-											"physicalType": "int"
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
@@ -3214,8 +3214,8 @@
 										},
 										"sink": {
 											"name": "hcpcs_code",
-											"type": "Int32",
-											"physicalType": "int"
+											"type": "String",
+											"physicalType": "varchar"
 										}
 									},
 									{
@@ -3245,7 +3245,7 @@
 									{
 										"source": {
 											"name": "number_of_services",
-											"type": "String",
+											"type": "Int32",
 											"physicalType": "String"
 										},
 										"sink": {
@@ -3257,7 +3257,7 @@
 									{
 										"source": {
 											"name": "number_of_medicare_beneficiaries",
-											"type": "String",
+											"type": "Int32",
 											"physicalType": "String"
 										},
 										"sink": {
@@ -3269,7 +3269,7 @@
 									{
 										"source": {
 											"name": "number_of_distinct_medicare_beneficiary_per_day_services",
-											"type": "String",
+											"type": "Int32",
 											"physicalType": "String"
 										},
 										"sink": {
@@ -3281,7 +3281,7 @@
 									{
 										"source": {
 											"name": "average_medicare_allowed_amount",
-											"type": "String",
+											"type": "Decimal",
 											"physicalType": "String"
 										},
 										"sink": {
@@ -3293,7 +3293,7 @@
 									{
 										"source": {
 											"name": "average_submitted_charge_amount",
-											"type": "String",
+											"type": "Decimal",
 											"physicalType": "String"
 										},
 										"sink": {
@@ -3305,7 +3305,7 @@
 									{
 										"source": {
 											"name": "average_medicare_payment_amount",
-											"type": "String",
+											"type": "Decimal",
 											"physicalType": "String"
 										},
 										"sink": {
@@ -3317,7 +3317,7 @@
 									{
 										"source": {
 											"name": "average_medicare_standardized_amount",
-											"type": "String",
+											"type": "Decimal",
 											"physicalType": "String"
 										},
 										"sink": {
@@ -3389,7 +3389,7 @@
 									{
 										"source": {
 											"name": "measure_performance_rate",
-											"type": "String",
+											"type": "Int32",
 											"physicalType": "String"
 										},
 										"sink": {
@@ -3401,7 +3401,7 @@
 									{
 										"source": {
 											"name": "denominator_count",
-											"type": "String",
+											"type": "Int32",
 											"physicalType": "String"
 										},
 										"sink": {
@@ -3420,14 +3420,14 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "All_JOIN",
+								"referenceName": "fl_nppes_procs_csv",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "fl_nppes_procs",
+								"referenceName": "fl_nppes_procs_table",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
