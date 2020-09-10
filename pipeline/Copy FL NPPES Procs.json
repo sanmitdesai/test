@@ -42,8 +42,8 @@
 								},
 								"sink": {
 									"name": "national_provider_identifier",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "String",
+									"physicalType": "varchar"
 								}
 							},
 							{
@@ -54,8 +54,8 @@
 								},
 								"sink": {
 									"name": "event_year",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "String",
+									"physicalType": "varchar"
 								}
 							},
 							{
@@ -186,8 +186,8 @@
 								},
 								"sink": {
 									"name": "graduation_year",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "String",
+									"physicalType": "varchar"
 								}
 							},
 							{
@@ -234,8 +234,8 @@
 								},
 								"sink": {
 									"name": "number_of_group_practice_members",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "String",
+									"physicalType": "varchar"
 								}
 							},
 							{
@@ -246,8 +246,8 @@
 								},
 								"sink": {
 									"name": "hospital_affiliation_ccn_1",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "String",
+									"physicalType": "varchar"
 								}
 							},
 							{
@@ -270,8 +270,8 @@
 								},
 								"sink": {
 									"name": "hospital_affiliation_ccn_2",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "String",
+									"physicalType": "varchar"
 								}
 							},
 							{
@@ -414,8 +414,8 @@
 								},
 								"sink": {
 									"name": "hcpcs_code",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "String",
+									"physicalType": "varchar"
 								}
 							},
 							{
