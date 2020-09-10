@@ -1,0 +1,216 @@
+{
+	"name": "All_JOIN",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "all_join.csv",
+				"container": "otuputcontainer"
+			},
+			"columnDelimiter": "|",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "national_provider_identifier",
+				"type": "String"
+			},
+			{
+				"name": "year",
+				"type": "String"
+			},
+			{
+				"name": "licensure_status",
+				"type": "String"
+			},
+			{
+				"name": "licensure_activity_status",
+				"type": "String"
+			},
+			{
+				"name": "expiration_date",
+				"type": "String"
+			},
+			{
+				"name": "status_effective_date",
+				"type": "String"
+			},
+			{
+				"name": "last_name",
+				"type": "String"
+			},
+			{
+				"name": "first_name",
+				"type": "String"
+			},
+			{
+				"name": "middle_name",
+				"type": "String"
+			},
+			{
+				"name": "practice_location_address_state",
+				"type": "String"
+			},
+			{
+				"name": "credential",
+				"type": "String"
+			},
+			{
+				"name": "medical_school_name",
+				"type": "String"
+			},
+			{
+				"name": "graduation_year",
+				"type": "String"
+			},
+			{
+				"name": "primary_specialty",
+				"type": "String"
+			},
+			{
+				"name": "all_secondary_specialties",
+				"type": "String"
+			},
+			{
+				"name": "organization_legal_name",
+				"type": "String"
+			},
+			{
+				"name": "number_of_group_practice_members",
+				"type": "String"
+			},
+			{
+				"name": "hospital_affiliation_ccn_1",
+				"type": "String"
+			},
+			{
+				"name": "hospital_affiliation_lbn_1",
+				"type": "String"
+			},
+			{
+				"name": "hospital_affiliation_ccn_2",
+				"type": "String"
+			},
+			{
+				"name": "hospital_affiliation_lbn_2",
+				"type": "String"
+			},
+			{
+				"name": "hospital_affiliation_ccn_3",
+				"type": "String"
+			},
+			{
+				"name": "hospital_affiliation_lbn_3",
+				"type": "String"
+			},
+			{
+				"name": "hospital_affiliation_ccn_4",
+				"type": "String"
+			},
+			{
+				"name": "hospital_affiliation_lbn_4",
+				"type": "String"
+			},
+			{
+				"name": "hospital_affiliation_ccn_5",
+				"type": "String"
+			},
+			{
+				"name": "hospital_affiliation_lbn_5",
+				"type": "String"
+			},
+			{
+				"name": "professional_accepts_medicare_assignment",
+				"type": "String"
+			},
+			{
+				"name": "gender_of_the_provider",
+				"type": "String"
+			},
+			{
+				"name": "entity_type_of_the_provider",
+				"type": "String"
+			},
+			{
+				"name": "provider_type",
+				"type": "String"
+			},
+			{
+				"name": "hcpcs_code",
+				"type": "String"
+			},
+			{
+				"name": "hcpcs_description",
+				"type": "String"
+			},
+			{
+				"name": "hcpcs_drug_indicator",
+				"type": "String"
+			},
+			{
+				"name": "number_of_services",
+				"type": "String"
+			},
+			{
+				"name": "number_of_medicare_beneficiaries",
+				"type": "String"
+			},
+			{
+				"name": "number_of_distinct_medicare_beneficiary_per_day_services",
+				"type": "String"
+			},
+			{
+				"name": "average_medicare_allowed_amount",
+				"type": "String"
+			},
+			{
+				"name": "average_submitted_charge_amount",
+				"type": "String"
+			},
+			{
+				"name": "average_medicare_payment_amount",
+				"type": "String"
+			},
+			{
+				"name": "average_medicare_standardized_amount",
+				"type": "String"
+			},
+			{
+				"name": "apm_affiliation_1",
+				"type": "String"
+			},
+			{
+				"name": "apm_affiliation_2",
+				"type": "String"
+			},
+			{
+				"name": "apm_affiliation_3",
+				"type": "String"
+			},
+			{
+				"name": "apm_affiliation_4",
+				"type": "String"
+			},
+			{
+				"name": "attestation_value",
+				"type": "String"
+			},
+			{
+				"name": "measure_performance_rate",
+				"type": "String"
+			},
+			{
+				"name": "denominator_count",
+				"type": "String"
+			}
+		]
+	}
+}
