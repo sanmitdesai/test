@@ -1,9 +1,9 @@
 {
-	"name": "pipeline1",
+	"name": "Join_All",
 	"properties": {
 		"activities": [
 			{
-				"name": "dataflow1",
+				"name": "Join_All",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
