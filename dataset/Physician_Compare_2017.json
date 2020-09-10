@@ -1,0 +1,88 @@
+{
+	"name": "Physician_Compare_2017",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Physician_Compare_2017_ Individual_EC_Public_Reporting_-_Measures.csv",
+				"container": "espy360blob1"
+			},
+			"columnDelimiter": "|",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "npi",
+				"type": "String"
+			},
+			{
+				"name": "pac_id",
+				"type": "String"
+			},
+			{
+				"name": "last_name",
+				"type": "String"
+			},
+			{
+				"name": "first_name",
+				"type": "String"
+			},
+			{
+				"name": "apm_affiliation_1",
+				"type": "String"
+			},
+			{
+				"name": "apm_affiliation_2",
+				"type": "String"
+			},
+			{
+				"name": "apm_affiliation_3",
+				"type": "String"
+			},
+			{
+				"name": "apm_affiliation_4",
+				"type": "String"
+			},
+			{
+				"name": "measure_code",
+				"type": "String"
+			},
+			{
+				"name": "measure_title",
+				"type": "String"
+			},
+			{
+				"name": "inverse_measure",
+				"type": "String"
+			},
+			{
+				"name": "attestation_value",
+				"type": "String"
+			},
+			{
+				"name": "measure_performance_rate",
+				"type": "String"
+			},
+			{
+				"name": "denominator_count",
+				"type": "String"
+			},
+			{
+				"name": "collection_type",
+				"type": "String"
+			},
+			{
+				"name": "reported_on_pc_live_site",
+				"type": "String"
+			}
+		]
+	}
+}
