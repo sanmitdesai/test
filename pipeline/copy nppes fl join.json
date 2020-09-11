@@ -450,8 +450,8 @@
 								},
 								"sink": {
 									"name": "number_of_services",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "String",
+									"physicalType": "varchar"
 								}
 							},
 							{
@@ -462,8 +462,8 @@
 								},
 								"sink": {
 									"name": "number_of_medicare_beneficiaries",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "String",
+									"physicalType": "varchar"
 								}
 							},
 							{
@@ -474,8 +474,8 @@
 								},
 								"sink": {
 									"name": "number_of_distinct_medicare_beneficiary_per_day_services",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "String",
+									"physicalType": "varchar"
 								}
 							},
 							{
@@ -486,8 +486,8 @@
 								},
 								"sink": {
 									"name": "average_medicare_allowed_amount",
-									"type": "Decimal",
-									"physicalType": "decimal"
+									"type": "String",
+									"physicalType": "varchar"
 								}
 							},
 							{
@@ -498,8 +498,8 @@
 								},
 								"sink": {
 									"name": "average_submitted_charge_amount",
-									"type": "Decimal",
-									"physicalType": "decimal"
+									"type": "String",
+									"physicalType": "varchar"
 								}
 							},
 							{
@@ -510,8 +510,8 @@
 								},
 								"sink": {
 									"name": "average_medicare_payment_amount",
-									"type": "Decimal",
-									"physicalType": "decimal"
+									"type": "String",
+									"physicalType": "varchar"
 								}
 							},
 							{
@@ -522,8 +522,8 @@
 								},
 								"sink": {
 									"name": "average_medicare_standardized_amount",
-									"type": "Decimal",
-									"physicalType": "decimal"
+									"type": "String",
+									"physicalType": "varchar"
 								}
 							},
 							{
@@ -594,8 +594,8 @@
 								},
 								"sink": {
 									"name": "measure_performance_rate",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "String",
+									"physicalType": "varchar"
 								}
 							},
 							{
@@ -606,8 +606,8 @@
 								},
 								"sink": {
 									"name": "denominator_count",
-									"type": "Int32",
-									"physicalType": "int"
+									"type": "String",
+									"physicalType": "varchar"
 								}
 							}
 						],
