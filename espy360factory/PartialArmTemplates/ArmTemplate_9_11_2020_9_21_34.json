@@ -1,0 +1,878 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "espy360factory"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/copy nppes fl join')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureMySqlSink",
+								"writeBatchSize": 10000,
+								"writeBatchTimeout": "00:00:30"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "national_provider_identifier",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "national_provider_identifier",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "year",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "event_year",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "licensure_status",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "licensure_status",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "licensure_activity_status",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "licensure_activity_status",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "expiration_date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "expiration_date",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "status_effective_date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "status_effective_date",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "last_name",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "last_name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "first_name",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "first_name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "middle_name",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "middle_name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "practice_location_address_state",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "practice_location_address_state",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "credential",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "credential",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "medical_school_name",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "medical_school_name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "graduation_year",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "graduation_year",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "primary_specialty",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "primary_specialty",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "all_secondary_specialties",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "all_secondary_specialties",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "organization_legal_name",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "organization_legal_name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "number_of_group_practice_members",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "number_of_group_practice_members",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "hospital_affiliation_ccn_1",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "hospital_affiliation_ccn_1",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "hospital_affiliation_lbn_1",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "hospital_affiliation_lbn_1",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "hospital_affiliation_ccn_2",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "hospital_affiliation_ccn_2",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "hospital_affiliation_lbn_2",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "hospital_affiliation_lbn_2",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "hospital_affiliation_ccn_3",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "hospital_affiliation_ccn_3",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "hospital_affiliation_lbn_3",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "hospital_affiliation_lbn_3",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "hospital_affiliation_ccn_4",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "hospital_affiliation_ccn_4",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "hospital_affiliation_lbn_4",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "hospital_affiliation_lbn_4",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "hospital_affiliation_ccn_5",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "hospital_affiliation_ccn_5",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "hospital_affiliation_lbn_5",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "hospital_affiliation_lbn_5",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "professional_accepts_medicare_assignment",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "professional_accepts_medicare_assignment",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "gender_of_the_provider",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "gender_of_the_provider",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "entity_type_of_the_provider",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "entity_type_of_the_provider",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "provider_type",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "provider_type",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "hcpcs_code",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "hcpcs_code",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "hcpcs_description",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "hcpcs_description",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "hcpcs_drug_indicator",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "hcpcs_drug_indicator",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "number_of_services",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "number_of_services",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "number_of_medicare_beneficiaries",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "number_of_medicare_beneficiaries",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "number_of_distinct_medicare_beneficiary_per_day_services",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "number_of_distinct_medicare_beneficiary_per_day_services",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "average_medicare_allowed_amount",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "average_medicare_allowed_amount",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "average_submitted_charge_amount",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "average_submitted_charge_amount",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "average_medicare_payment_amount",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "average_medicare_payment_amount",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "average_medicare_standardized_amount",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "average_medicare_standardized_amount",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "apm_affiliation_1",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "apm_affiliation_1",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "apm_affiliation_2",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "apm_affiliation_2",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "apm_affiliation_3",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "apm_affiliation_3",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "apm_affiliation_4",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "apm_affiliation_4",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "attestation_value",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "attestation_value",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "measure_performance_rate",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "measure_performance_rate",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "denominator_count",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "denominator_count",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "fl_nppes_procs_csv",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "fl_nppes_procs_table",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/fl_nppes_procs_csv')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/fl_nppes_procs_csv')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "all_join.csv",
+						"container": "otuputcontainer"
+					},
+					"columnDelimiter": "|",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"nullValue": "\"\"",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "national_provider_identifier",
+						"type": "String"
+					},
+					{
+						"name": "year",
+						"type": "String"
+					},
+					{
+						"name": "licensure_status",
+						"type": "String"
+					},
+					{
+						"name": "licensure_activity_status",
+						"type": "String"
+					},
+					{
+						"name": "expiration_date",
+						"type": "String"
+					},
+					{
+						"name": "status_effective_date",
+						"type": "String"
+					},
+					{
+						"name": "last_name",
+						"type": "String"
+					},
+					{
+						"name": "first_name",
+						"type": "String"
+					},
+					{
+						"name": "middle_name",
+						"type": "String"
+					},
+					{
+						"name": "practice_location_address_state",
+						"type": "String"
+					},
+					{
+						"name": "credential",
+						"type": "String"
+					},
+					{
+						"name": "medical_school_name",
+						"type": "String"
+					},
+					{
+						"name": "graduation_year",
+						"type": "String"
+					},
+					{
+						"name": "primary_specialty",
+						"type": "String"
+					},
+					{
+						"name": "all_secondary_specialties",
+						"type": "String"
+					},
+					{
+						"name": "organization_legal_name",
+						"type": "String"
+					},
+					{
+						"name": "number_of_group_practice_members",
+						"type": "String"
+					},
+					{
+						"name": "hospital_affiliation_ccn_1",
+						"type": "String"
+					},
+					{
+						"name": "hospital_affiliation_lbn_1",
+						"type": "String"
+					},
+					{
+						"name": "hospital_affiliation_ccn_2",
+						"type": "String"
+					},
+					{
+						"name": "hospital_affiliation_lbn_2",
+						"type": "String"
+					},
+					{
+						"name": "hospital_affiliation_ccn_3",
+						"type": "String"
+					},
+					{
+						"name": "hospital_affiliation_lbn_3",
+						"type": "String"
+					},
+					{
+						"name": "hospital_affiliation_ccn_4",
+						"type": "String"
+					},
+					{
+						"name": "hospital_affiliation_lbn_4",
+						"type": "String"
+					},
+					{
+						"name": "hospital_affiliation_ccn_5",
+						"type": "String"
+					},
+					{
+						"name": "hospital_affiliation_lbn_5",
+						"type": "String"
+					},
+					{
+						"name": "professional_accepts_medicare_assignment",
+						"type": "String"
+					},
+					{
+						"name": "gender_of_the_provider",
+						"type": "String"
+					},
+					{
+						"name": "entity_type_of_the_provider",
+						"type": "String"
+					},
+					{
+						"name": "provider_type",
+						"type": "String"
+					},
+					{
+						"name": "hcpcs_code",
+						"type": "String"
+					},
+					{
+						"name": "hcpcs_description",
+						"type": "String"
+					},
+					{
+						"name": "hcpcs_drug_indicator",
+						"type": "String"
+					},
+					{
+						"name": "number_of_services",
+						"type": "String"
+					},
+					{
+						"name": "number_of_medicare_beneficiaries",
+						"type": "String"
+					},
+					{
+						"name": "number_of_distinct_medicare_beneficiary_per_day_services",
+						"type": "String"
+					},
+					{
+						"name": "average_medicare_allowed_amount",
+						"type": "String"
+					},
+					{
+						"name": "average_submitted_charge_amount",
+						"type": "String"
+					},
+					{
+						"name": "average_medicare_payment_amount",
+						"type": "String"
+					},
+					{
+						"name": "average_medicare_standardized_amount",
+						"type": "String"
+					},
+					{
+						"name": "apm_affiliation_1",
+						"type": "String"
+					},
+					{
+						"name": "apm_affiliation_2",
+						"type": "String"
+					},
+					{
+						"name": "apm_affiliation_3",
+						"type": "String"
+					},
+					{
+						"name": "apm_affiliation_4",
+						"type": "String"
+					},
+					{
+						"name": "attestation_value",
+						"type": "String"
+					},
+					{
+						"name": "measure_performance_rate",
+						"type": "String"
+					},
+					{
+						"name": "denominator_count",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		}
+	]
+}
