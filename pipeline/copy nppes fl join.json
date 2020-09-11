@@ -122,7 +122,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "florida_nppes_join_table",
+						"referenceName": "fl_nppes_procs_table",
 						"type": "DatasetReference"
 					}
 				]
