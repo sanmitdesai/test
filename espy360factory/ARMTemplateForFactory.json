@@ -3287,7 +3287,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "florida_nppes_join_table",
+								"referenceName": "fl_nppes_procs_table",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -3298,7 +3298,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/join_input_fl_nppes')]",
-				"[concat(variables('factoryId'), '/datasets/florida_nppes_join_table')]"
+				"[concat(variables('factoryId'), '/datasets/fl_nppes_procs_table')]"
 			]
 		},
 		{
